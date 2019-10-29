@@ -27,6 +27,7 @@
 \usepackage{amsthm}
 \usepackage{thmtools}
 \usepackage{ctex}
+\usepackage{diagbox}
 
 \setlength{\topmargin}{0pt}
 \setlength{\textheight}{9in}
@@ -219,7 +220,162 @@ ID: \id
 	\end{enumerate}
 \end{exercise}
 \begin{solution}
+	\begin{enumerate}
+		\item $$\begin{aligned}
+				      \nabla L(\mathbf{w})
+				       & = -\cfrac{1}{n}\sum_{i=1}^{n}{\left( y_i \cfrac{\nabla \cfrac{\exp(\langle \textbf{w},  \overline{\mathbf{x}}_i \rangle)}{1+\exp(\langle \textbf{w},  \overline{\mathbf{x}}_i \rangle) }  }{ \cfrac{\exp(\langle \textbf{w},  \overline{\mathbf{x}}_i \rangle)}{1+\exp(\langle \textbf{w},  \overline{\mathbf{x}}_i \rangle) }  }   +(1-y_i) \cfrac{\nabla \cfrac{1}{1+\exp(\langle \textbf{w},  \overline{\mathbf{x}}_i \rangle) }}{\cfrac{1}{1+\exp(\langle \textbf{w},  \overline{\mathbf{x}}_i \rangle) } } \right)} \\
+				       & =-\cfrac{1}{n}\sum_{i=1}^{n}{ \left(
+				      \cfrac{y_i}{ \exp(\langle \textbf{w},  \overline{\mathbf{x}}_i \rangle)\left(1+\exp(\langle \textbf{w},  \overline{\mathbf{x}}_i \rangle)\right)}
+				      - \cfrac{1-y_i}{1+\exp(\langle \textbf{w},  \overline{\mathbf{x}}_i \rangle)}
+				      \right) \nabla \exp(\langle \textbf{w},  \overline{\mathbf{x}}_i \rangle)}                                                                                                                                                                                                                                                                                                                                                                                                                                                  \\
+				       & =-\cfrac{1}{n}\sum_{i=1}^{n}{ \left(
+				      \cfrac{y_i}{ \exp(\langle \textbf{w},  \overline{\mathbf{x}}_i \rangle)\left(1+\exp(\langle \textbf{w},  \overline{\mathbf{x}}_i \rangle)\right)}
+				      - \cfrac{1-y_i}{1+\exp(\langle \textbf{w},  \overline{\mathbf{x}}_i \rangle)}
+				      \right) \exp(\langle \textbf{w},  \overline{\mathbf{x}}_i \rangle)} \overline{\mathbf{x}}_i                                                                                                                                                                                                                                                                                                                                                                                                                                 \\
+				       & = -\cfrac{1}{n}\sum_{i=1}^{n}{
+				      \left(
+				      y_i - \cfrac{\exp(\langle \textbf{w},\overline{\mathbf{x}}_i \rangle)}{1+\exp(\langle \textbf{w},\overline{\mathbf{x}}_i \rangle)}
+				      \right)
+				      \overline{\mathbf{x}}_i
+				      }
+			      \end{aligned}$$
+		      设
 
+		      $$L_i(\mathbf{w})=y_i \log \left( \cfrac{\exp(\langle \textbf{w},  \overline{\mathbf{x}}_i \rangle)}{1+\exp(\langle \textbf{w},  \overline{\mathbf{x}}_i \rangle) } \right) + (1-y_i)\log \left( \cfrac{1}{1+\exp(\langle \textbf{w},  \overline{\mathbf{x}}_i \rangle)} \right)$$
+
+		      则 $\nabla L_i(\mathbf{w})$ 的第 $p$ 个分量为
+
+		      $$\left(\nabla L_i(\mathbf{w})\right)_p=
+			      \left(
+			      y_i - \cfrac{\exp(\langle \textbf{w},\overline{\mathbf{x}}_i \rangle)}{1+\exp(\langle \textbf{w},\overline{\mathbf{x}}_i \rangle)}
+			      \right) \overline{x}_{i,p}
+			      =\cfrac{\partial L_i(\mathbf{w})}{\partial w_p}
+		      $$
+
+		      其中 $\overline{x}_{i,p}$ 是 $\overline{\mathbf{x}}_{i}$ 的第 $p$ 个分量。所以
+
+		      $$\begin{aligned}
+				      \cfrac{\partial^2 L_i(\mathbf{w})}{\partial w_p \partial w_q}
+				       & =-\overline{x}_{i,p}\cfrac{\partial}{\partial w_q} \left( \cfrac{\exp(\langle \textbf{w},  \overline{\mathbf{x}}_i \rangle)}{1+\exp(\langle \textbf{w},  \overline{\mathbf{x}}_i \rangle) } \right)                                                               \\
+				       & =-\overline{x}_{i,p}\cdot\cfrac{1}{\left(1+\exp(\langle \textbf{w},  \overline{\mathbf{x}}_i \rangle)\right)^2}\cdot\cfrac{\partial \exp(\langle \textbf{w},  \overline{\mathbf{x}}_i \rangle)}{\partial w_q}                                                     \\
+				       & = -\overline{x}_{i,p}\cdot\cfrac{\exp(\langle \textbf{w},  \overline{\mathbf{x}}_i \rangle)}{\left(1+\exp(\langle \textbf{w},  \overline{\mathbf{x}}_i \rangle)\right)^2}\cdot\cfrac{\partial \langle \textbf{w},  \overline{\mathbf{x}}_i \rangle}{\partial w_q} \\
+				       & =-\cfrac{\exp(\langle \textbf{w},  \overline{\mathbf{x}}_i \rangle)}{\left(1+\exp(\langle \textbf{w},  \overline{\mathbf{x}}_i \rangle)\right)^2}\cdot\overline{x}_{i,p}\overline{x}_{i,q}
+			      \end{aligned}$$
+		      所以
+		      $$\begin{aligned}
+				      \mathbf{H}(L(\mathbf{w}))
+				       & = -\cfrac{1}{n}\sum_{i=1}^{n}{
+					      \begin{pmatrix}
+						      \cfrac{\partial^2 L_i(\mathbf{w})}{\partial w_1\partial w_1 } & \cdots & \cfrac{\partial^2 L_i(\mathbf{w})}{\partial w_1\partial w_n } \\
+						      \vdots                                                        &        & \vdots                                                        \\
+						      \cfrac{\partial^2 L_i(\mathbf{w})}{\partial w_n\partial w_1 } & \cdots & \cfrac{\partial^2 L_i(\mathbf{w})}{\partial w_n\partial w_n }
+					      \end{pmatrix}
+				      }                                      \\
+				       & = \cfrac{1}{n}\sum_{i=1}^{n}{\left(
+				      \cfrac{\exp(\langle \textbf{w},  \overline{\mathbf{x}}_i \rangle)}{(1+\exp(\langle \textbf{w},  \overline{\mathbf{x}}_i \rangle))^2}\cdot\overline{\mathbf{x}}_{i}\overline{\mathbf{x}}_{i}^\top
+				      \right)}
+			      \end{aligned}$$
+		\item $\forall \mathbf{y} \in \mathbb{R}^{(d+1)}$, $\|\mathbf{y}\|\neq0$, 有
+		      $$
+			      \mathbf{y}^\top\cdot \mathbf{H}\cdot \mathbf{y}
+			      = \cfrac{1}{n}\sum_{i=1}^{n}{\left(
+			      \cfrac{\exp(\langle \textbf{w},  \overline{\mathbf{x}}_i \rangle)}{(1+\exp(\langle \textbf{w},  \overline{\mathbf{x}}_i \rangle))^2}\cdot \mathbf{y}^\top\overline{\mathbf{x}}_{i}\overline{\mathbf{x}}_{i}^\top\mathbf{y}
+			      \right)}
+		      $$
+		      而
+		      $$\mathbf{y}^\top\overline{\mathbf{x}}_{i}\overline{\mathbf{x}}_{i}^\top\mathbf{y}=\left(\overline{\mathbf{x}}_{i}^\top\mathbf{y}\right)^2$$
+		      假设对 $\forall i =1,2,\cdots,n$, $\overline{\mathbf{x}}_{i}^\top\mathbf{y}=0$.
+
+		      因为 $\rank{\overline{\mathbf{X}}}=d+1$，则方程组
+		      $$\begin{pmatrix}
+				      \overline{\mathbf{x}}_{1}^\top \\
+				      \overline{\mathbf{x}}_{2}^\top \\
+				      \vdots                         \\
+				      \overline{\mathbf{x}}_{n}^\top
+			      \end{pmatrix}\cdot \mathbf{y}=0$$
+		      只有 $\mathbf{0}$ 解，与 $\mathbf{y}$ 的任意性相矛盾。
+
+		      因此存在 $i$ 使得 $\overline{\mathbf{x}}_{i}^\top\mathbf{y}\neq0$.
+
+		      所以 $\mathbf{y}^\top\cdot \mathbf{H}\cdot \mathbf{y}>0$.
+
+		      所以 $\mathbf{H}$ 正定，所以 $L(\mathbf{w})$ 是凸函数。
+		\item 设 $\lambda>0$, 则
+		      $$
+			      L(\lambda \hat{\mathbf{w}})
+			      =-\frac{1}{n}\sum_{i=1}^n \left( y_i \log \left( \frac{\exp(\langle \lambda \hat{\mathbf{w}},  \overline{\mathbf{x}}_i \rangle)}{1+\exp(\langle \lambda \hat{\mathbf{w}},  \overline{\mathbf{x}}_i \rangle) } \right) + (1-y_i)\log \left( \frac{1}{1+\exp(\langle \lambda \hat{\mathbf{w}},  \overline{\mathbf{x}}_i \rangle)} \right) \right)
+		      $$
+		      $$\begin{aligned}
+				      \cfrac{\partial L(\lambda \hat{\mathbf{w}})}{\partial \lambda}
+				       & = -\cfrac{1}{n}\sum_{i=1}^{n}{
+				      \left( \left(
+					      y_i - \cfrac{\exp(\langle \lambda \hat{\mathbf{w}},\overline{\mathbf{x}}_i \rangle)}{1+\exp(\langle \lambda \hat{\mathbf{w}},\overline{\mathbf{x}}_i \rangle)}
+					      \right)
+				      \langle \hat{\mathbf{w}},\overline{\mathbf{x}}_i \rangle \right)
+				      }                                 \\
+				       & =-\cfrac{1}{n}\sum_{i=1}^{n}{
+				      \left( \left(
+					      y_i - \cfrac{\exp(\lambda\langle \hat{\mathbf{w}},\overline{\mathbf{x}}_i \rangle)}{1+\exp(\lambda\langle \hat{\mathbf{w}},\overline{\mathbf{x}}_i \rangle)}
+					      \right)
+				      \langle \hat{\mathbf{w}},\overline{\mathbf{x}}_i \rangle \right)
+				      }
+			      \end{aligned}$$
+		      \begin{enumerate}
+			      \item $y_i=0$ 时，$\langle \hat{\mathbf{w}},\overline{\mathbf{x}}_i \rangle<0$, 所以 $\left(
+				            y_i - \cfrac{\exp(\lambda\langle \hat{\mathbf{w}},\overline{\mathbf{x}}_i \rangle)}{1+\exp(\lambda\langle \hat{\mathbf{w}},\overline{\mathbf{x}}_i \rangle)}
+				            \right)
+				            \langle \hat{\mathbf{w}},\overline{\mathbf{x}}_i \rangle>0$.
+			      \item $y_i=1$ 时，$\langle \hat{\mathbf{w}},\overline{\mathbf{x}}_i \rangle>0$, 所以 $\left(
+				            y_i - \cfrac{\exp(\lambda\langle \hat{\mathbf{w}},\overline{\mathbf{x}}_i \rangle)}{1+\exp(\lambda\langle \hat{\mathbf{w}},\overline{\mathbf{x}}_i \rangle)}
+				            \right)
+				            \langle \hat{\mathbf{w}},\overline{\mathbf{x}}_i \rangle>0$.
+		      \end{enumerate}
+		      所以 $\cfrac{\partial L(\lambda \hat{\mathbf{w}})}{\partial \lambda}<0$.
+
+		      又因为
+
+
+
+		      $$\begin{aligned}
+				       & \ \ \ \lim_{\lambda\to\infty}{L(\lambda \hat{\mathbf{w}})}                                                                                                                                                                                                                                                                                                                                      \\
+				       & =-\frac{1}{n}\sum_{i=1}^n \left( y_i \log \lim_{\lambda\to\infty} \left( \frac{\exp(\langle \lambda \hat{\mathbf{w}},  \overline{\mathbf{x}}_i \rangle)}{1+\exp(\langle \lambda \hat{\mathbf{w}},  \overline{\mathbf{x}}_i \rangle) } \right) + (1-y_i)\log \lim_{\lambda\to\infty} \left( \frac{1}{1+\exp(\langle \lambda \hat{\mathbf{w}},  \overline{\mathbf{x}}_i \rangle)} \right) \right) \\
+				       & = -\frac{1}{n}\sum_{i=1}^n \left( y_i \log 1  + (1-y_i)\log 1  \right)                                                                                                                                                                                                                                                                                                                          \\
+				       & =0
+			      \end{aligned}$$
+		      同时 $L(\mathbf{w})>0$ 恒成立，可知 $\min L(\mathbf{w})$ 无法取到。
+		\item 如果数据集满足 $\exists \hat{\mathbf{w}}\in\mathbb{R}^{(d+1)}$, 使得
+		      $$\begin{aligned}
+				      \langle \hat{\mathbf{w}},\overline{\mathbf{x}}_i \rangle & \ge 0, \forall i \in \mathcal{I}^+ \\
+				      \langle \hat{\mathbf{w}},\overline{\mathbf{x}}_i \rangle & \le 0, \forall i \in \mathcal{I}^-
+			      \end{aligned}$$
+		      用上一题的方法，易证问题 (\ref{prob:logistic}) 无解。
+
+		      所以只要考虑等号不能取到的情况。
+
+		      由题意可知，对 $\forall \mathbf{w}\in \mathbb{R}^{(d+1)}$, $\exists \overline{\mathbf{x}}_i, i\in\{1,2,\cdots,n\}$, 使得
+		      $$\begin{aligned}
+				      \langle \mathbf{w},\overline{\mathbf{x}}_i \rangle & < 0, \text{if}\ i \in \mathcal{I}^+ \\
+				      \langle \mathbf{w},\overline{\mathbf{x}}_i \rangle & > 0, \text{if}\ i \in \mathcal{I}^-
+			      \end{aligned}$$
+		      对于满足上述条件的 $\mathbf{x}_i$, 任取 $\lambda>0$, 有
+		      $$\begin{aligned}
+				      \langle \lambda\mathbf{w},\overline{\mathbf{x}}_i \rangle & = \lambda\langle \mathbf{w},\overline{\mathbf{x}}_i \rangle < 0, \text{if}\ i \in \mathcal{I}^+ \\
+				      \langle \lambda\mathbf{w},\overline{\mathbf{x}}_i \rangle & = \lambda\langle \mathbf{w},\overline{\mathbf{x}}_i \rangle> 0, \text{if}\ i \in \mathcal{I}^-
+			      \end{aligned}$$
+
+		      所以
+		      $$\begin{aligned}
+				      \lim_{\lambda\to +\infty} \log\left( \cfrac{1}{1+\exp(\langle \lambda\mathbf{w},\overline{\mathbf{x}}_i \rangle)} \right)                                                               & = -\infty, \text{if}\ i \in \mathcal{I}^+\ \text{and}\ \langle \lambda\mathbf{w},\overline{\mathbf{x}}_i \rangle <0 \\
+				      \lim_{\lambda\to +\infty} \log\left( \cfrac{\exp(\langle \lambda\mathbf{w},\overline{\mathbf{x}}_i \rangle)}{1+\exp(\langle \lambda\mathbf{w},\overline{\mathbf{x}}_i \rangle)} \right) & = -\infty, \text{if}\ i \in \mathcal{I}^-\ \text{and}\ \langle \lambda\mathbf{w},\overline{\mathbf{x}}_i \rangle <0
+			      \end{aligned}$$
+
+		      所以在线性不可分的情况下，若 $\|\mathbf{w}\|\to+\infty$, 则
+		      $$L(\mathbf{w})\to+\infty$$
+		      而 $L(\mathbf{0})$ 有限，因此 $L(\mathbf{w})$ 存在最小值。
+
+		      在 $\rank{\overline{\mathbf{X}}}=d+1$ 的条件下，可知最小值是唯一的。
+
+	\end{enumerate}
 \end{solution}
 
 
@@ -273,8 +429,22 @@ ID: \id
 \end{algorithm}
 
 \begin{solution}
-设垃圾邮件为正例，非垃圾邮件为反例。
+	设垃圾邮件为正例，非垃圾邮件为反例。
+	$$\begin{tabular}{|c|c|c|}
+			\hline
+			\diagbox{Actual}{Predicted} & Spam & Non-spam \\
+			\hline
+			Spam                        & 47   & 2        \\
+			\hline
+			Non-spam                    & 0    & 242      \\
+			\hline
+		\end{tabular}$$
 
+	$$\begin{aligned}
+			\text{Precision} & =1.0                \\
+			\text{Recall}    & =0.9591836734693877 \\
+			\text{F1 score}  & =0.9791666666666665
+		\end{aligned}$$
 
 \end{solution}
 
@@ -291,8 +461,22 @@ ID: \id
 
 \begin{solution}
 	设标识为 2 的图片为正例，标识为 1 的图片为反例。
+	$$\begin{tabular}{|c|c|c|}
+			\hline
+			\diagbox{Actual}{Predicted} & 2    & 1    \\
+			\hline
+			2                           & 1025 & 7    \\
+			\hline
+			1                           & 7    & 1128 \\
+			\hline
+		\end{tabular}$$
 
-	Confusion matrix
+	$$\begin{aligned}
+			\text{Precision} & =0.9932170542635659 \\
+			\text{Recall}    & =0.9932170542635659 \\
+			\text{F1 score}  & =0.9932170542635659
+		\end{aligned}$$
+
 \end{solution}
 
 

@@ -5,7 +5,7 @@ import time
 import gc
 
 
-def standardize_img(img: np.ndarray):
+def standardize_img(img: np.ndarray) -> np.ndarray:
     min = img.min(axis=0).reshape((1, img.shape[1]))
     max = img.max(axis=0).reshape((1, img.shape[1]))
     img = (img - min) / (max - min)
@@ -16,30 +16,40 @@ def standardize_img(img: np.ndarray):
 class Logistic_Regression_Classifier:
     w: np.ndarray
 
-    def train(self, X: np.ndarray, y: np.ndarray, step: float = 0.1, n: int = 1000, verbose: bool = False):
+    def nabla(self, X: np.ndarray, y: np.ndarray, sample_n: int) -> np.ndarray:
+        # y=0, coe = -exp/(1+exp)·X
+        # y=1, coe = 1/(1+exp)·X
+        exp = np.exp(X @ self.w)
+        nabla_by_X = -1 / sample_n * (y - exp / (1 + exp)) * X
+        nabla = nabla_by_X.sum(axis=0).reshape(self.w.shape)
+        return nabla
+
+    def L(self, X: np.ndarray, y: np.ndarray, sample_n: int) -> float:
+        exp = np.exp(X @ self.w)
+        Li = y * np.log(exp / (1 + exp)) + (1 - y) * np.log(1 / (1 + exp))
+        return -1 / sample_n * Li.sum()
+
+    def train(self, X: np.ndarray, y: np.ndarray, step: float = 0.1, n: int = 1000, verbosity: int = 0):
         start = time.time()
         sample_n, d = X.shape
-        if verbose:
+        if verbosity > 0:
             print('=== start training...')
             print('\ttraining binary logistic regression classifier by %d samples' % sample_n)
 
         self.w = np.full(shape=(d, 1), fill_value=0, dtype=np.float64)
         for i in range(n):
-            if verbose and (i + 1) % 100 == 0:
+            if verbosity > 0 and (i + 1) % verbosity == 0:
                 print('\titeration number: %d, time spent: %d s'
                       % (i + 1, time.time() - start))
-            # 若 y=0, 则 nabla = -exp/(1+exp)·X
-            # 若 y=1, 则 nabla = 1/(1+exp)·X
-            exp = np.exp(X @ self.w)
-            coe = -exp / (1 + exp)  # y=0 时 nabla 的系数
-            nabla_by_X = (coe + y) * X  # +y 是简化 y=1 时 nabla 计算的手段
-            nabla = - nabla_by_X.sum(axis=0).reshape(self.w.shape)
+                print('\t\tL(w) = %f' % self.L(X=X, y=y, sample_n=sample_n))
+            nabla = self.nabla(X=X, y=y, sample_n=sample_n)
             self.w -= step * nabla
             if np.isnan(self.w).sum() != 0 or np.isinf(self.w).sum() != 0:
                 # 检测因为不收敛导致的运算溢出
                 raise ValueError('divergence detected! iteration number: %d' % i)
         end = time.time()
-        print('=== training finished in %d s' % (end - start))
+        if verbosity > 0:
+            print('=== training finished in %d s' % (end - start))
         gc.collect()
 
     def predict(self, X: np.ndarray) -> np.ndarray:
@@ -62,7 +72,7 @@ if __name__ == '__main__':
     test_label = test_label - 1
 
     classifier = Logistic_Regression_Classifier()
-    classifier.train(X=train_img, y=train_label, step=0.0005, n=600, verbose=True)
+    classifier.train(X=train_img, y=train_label, step=1, n=3000, verbosity=100)
     pred_label = classifier.predict(X=test_img)
 
     # 假设 2 为正例，1 为反例

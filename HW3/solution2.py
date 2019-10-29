@@ -4,6 +4,7 @@ import os
 import re
 import gc
 import time
+import math
 from typing import Tuple
 
 splitter = re.compile(r'\s+')
@@ -97,14 +98,21 @@ class Naive_Bayes_Classifier_For_Mail:
             data=np.empty(shape=X.shape, dtype=int),
             index=X.index,
         )
-        for i in range(len(X)):
-            mail = X[i]
-            max_prob = -1
+        for i, mail in enumerate(X):
+            max_prob = - math.inf
             for c in self.class_set:
-                y_hat = self.p_by_class[c] * np.prod([
+                # y_hat = self.p_by_class[c] * np.prod([
+                #     # 所有出现在 mail 和 训练集中的 token
+                #     self.p_by_token_in_class[t][c]
+                #     for t in mail if t in self.token_set
+                # ])
+                # 取 log 把连乘变加法之后效果变好，可能是精度问题
+                # p 大致都在 1e-5 数量级
+                y_hat = np.log(self.p_by_class[c]) + np.log([
                     # 所有出现在 mail 和 训练集中的 token
-                    self.p_by_token_in_class[t][c] for t in mail if t in self.token_set
-                ])
+                    self.p_by_token_in_class[t][c]
+                    for t in mail if t in self.token_set
+                ]).sum()
                 if y_hat > max_prob:
                     max_prob = y_hat
                     result[i] = c

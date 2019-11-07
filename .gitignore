@@ -1,6 +1,7 @@
 .vscode
+.idea
 *.aux
 *.log
 *.pdf
 *.synctex.gz
-.idea
+!HW4/figures/*.pdf

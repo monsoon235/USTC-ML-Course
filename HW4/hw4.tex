@@ -37,6 +37,7 @@
 
 \usepackage{graphicx} % more modern
 \usepackage{subfigure}
+\usepackage{ctex}
 
 %%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%% Define math operator %%%%%
@@ -128,8 +129,8 @@ preheadhook={\begin{mdframed}[style=myframedstyle]},
 %%%%%%%%%%%%%%%%%%%%
 %% Put your information here %%
 %%%%%%%%%%%%%%%%%%%
-\newcommand{\name}{\text{San Zhang}}  	          			%%% FILL IN YOUR NAME HERE
-\newcommand{\id}{\text{PBXXXXXXXX}}		       			%%% FILL IN YOUR ID HERE
+\newcommand{\name}{\text{Jiahuan Yu}}  	          			%%% FILL IN YOUR NAME HERE
+\newcommand{\id}{\text{PB17121687}}		       			%%% FILL IN YOUR ID HERE
 %%%%%%%%%%%%%%%%%%%%
 %% End of the student's info %%
 %%%%%%%%%%%%%%%%%%%
@@ -158,23 +159,23 @@ preheadhook={\begin{mdframed}[style=myframedstyle]},
 
 
 \begin{center}
-{\bf\large Introduction to Machine Learning}\\
-{Fall 2019}\\
-University of Science and Technology of China
+	{\bf\large Introduction to Machine Learning}\\
+	{Fall 2019}\\
+	University of Science and Technology of China
 \end{center}
 
 \noindent
 Lecturer: Jie Wang  			 %%% FILL IN LECTURER HERE
 \hfill
-Homework \hwno             			
+Homework \hwno
 \\
 Posted: \posted
 \hfill
 Due: \due
 \\
-Name: \name             			
+Name: \name
 \hfill
-ID: \id						
+ID: \id
 \hfill
 
 \noindent
@@ -193,35 +194,35 @@ ID: \id
 \textbf{Notice, }to get the full credits, please show your solutions step by step.
 
 \begin{exercise}[Support Vector Machine (SVM) for Linearly Separable Cases \textnormal{40pts}]
-Given the training sample $\mathcal{D}=\{ (\textbf{x}_i,y_i) \}_{i=1}^n$, where $\textbf{x}_i \in \mathbb{R}^d$ and $y_i \in \{ -1,1 \}$. Let 
-\begin{align*}
-    \mathcal{D}^+=\{(\textbf{x}_i,y_i)\in\mathcal{D}:y_i=1\},\hspace{5mm}\mathcal{D}^-=\{(\textbf{x}_i,y_i)\in\mathcal{D}:y_i=-1\}.
-\end{align*}
-Assume that $\mathcal{D}^+$ and $\mathcal{D}^-$ are nonempty and the training sample $\mathcal{D}$ is linearly separable. We have shown in class that SVM can be written as
-\begin{align}\label{prob:SVM-1}
-	&\min_{\textbf{w},b}\,\,\frac{1}{2}\| \textbf{w} \|^2, \\
-	&\text{ s.t. } \min_i y_{i} ( \langle \textbf{w}, \textbf{x}_i \rangle + b ) = 1. \nonumber
-\end{align}
-Moreover, we further transform the problem in (\ref{prob:SVM-1}) to
-\begin{align}\label{prob:SVM}
-    	&\min_{\textbf{w},b}\,\,\frac{1}{2}\| \textbf{w} \|^2, \\
-    	&\text{ s.t. }\,\, y_{i} ( \langle \textbf{w}, \textbf{x}_i \rangle + b ) \geq 1, i=1,\ldots,n. \nonumber
-\end{align}
-We denote the feasible set of the problem in (\ref{prob:SVM}) by $$\mathcal{F}=\{(\mathbf{w},b):y_{i} ( \langle \textbf{w}, \textbf{x}_i \rangle + b ) \geq 1, i=1,\ldots,n\}.$$
+	Given the training sample $\mathcal{D}=\{ (\textbf{x}_i,y_i) \}_{i=1}^n$, where $\textbf{x}_i \in \mathbb{R}^d$ and $y_i \in \{ -1,1 \}$. Let
+	\begin{align*}
+		\mathcal{D}^+=\{(\textbf{x}_i,y_i)\in\mathcal{D}:y_i=1\},\hspace{5mm}\mathcal{D}^-=\{(\textbf{x}_i,y_i)\in\mathcal{D}:y_i=-1\}.
+	\end{align*}
+	Assume that $\mathcal{D}^+$ and $\mathcal{D}^-$ are nonempty and the training sample $\mathcal{D}$ is linearly separable. We have shown in class that SVM can be written as
+	\begin{align}\label{prob:SVM-1}
+		 & \min_{\textbf{w},b}\,\,\frac{1}{2}\| \textbf{w} \|^2,                                      \\
+		 & \text{ s.t. } \min_i y_{i} ( \langle \textbf{w}, \textbf{x}_i \rangle + b ) = 1. \nonumber
+	\end{align}
+	Moreover, we further transform the problem in (\ref{prob:SVM-1}) to
+	\begin{align}\label{prob:SVM}
+		 & \min_{\textbf{w},b}\,\,\frac{1}{2}\| \textbf{w} \|^2,                                                    \\
+		 & \text{ s.t. }\,\, y_{i} ( \langle \textbf{w}, \textbf{x}_i \rangle + b ) \geq 1, i=1,\ldots,n. \nonumber
+	\end{align}
+	We denote the feasible set of the problem in (\ref{prob:SVM}) by $$\mathcal{F}=\{(\mathbf{w},b):y_{i} ( \langle \textbf{w}, \textbf{x}_i \rangle + b ) \geq 1, i=1,\ldots,n\}.$$
 
-\begin{enumerate}
-    \item Show that $\mathcal{F}$ is nonempty.
-    \item Show that the problem in (\ref{prob:SVM}) admits an optimal solution.
-    \item Let $(\textbf{w}^*,b^*)$ be the optimal solution to problem (\ref{prob:SVM}). Show that $\mathbf{w}^*\neq0$.
-    \item Show that the problems in (\ref{prob:SVM-1}) and (\ref{prob:SVM}) are equivalent, that is, they share the same set of optimal solutions.
-    \item Let $(\textbf{w}^*,b^*)$ be the optimal solution to problem (\ref{prob:SVM}). Show there exist at least one positive sample and one negative sample, respectively, such that the equality holds. In other words, there exist $i,j \in \{ 1,2,\dots,n \}$ such that 
-    \begin{align*}
-        1=y_i = &\langle \textbf{w}^*, \textbf{x}_i \rangle + b^*, \\
-        -1=y_j = &\langle \textbf{w}^*, \textbf{x}_j \rangle + b^*.
-    \end{align*}
-    \item Show that the optimal solution to problem (\ref{prob:SVM}) is unique.
-    \item Find the dual problem of (\ref{prob:SVM}) and the corresponding optimal conditions.
-\end{enumerate}
+	\begin{enumerate}
+		\item Show that $\mathcal{F}$ is nonempty.
+		\item Show that the problem in (\ref{prob:SVM}) admits an optimal solution.
+		\item Let $(\textbf{w}^*,b^*)$ be the optimal solution to problem (\ref{prob:SVM}). Show that $\mathbf{w}^*\neq0$.
+		\item Show that the problems in (\ref{prob:SVM-1}) and (\ref{prob:SVM}) are equivalent, that is, they share the same set of optimal solutions.
+		\item Let $(\textbf{w}^*,b^*)$ be the optimal solution to problem (\ref{prob:SVM}). Show there exist at least one positive sample and one negative sample, respectively, such that the equality holds. In other words, there exist $i,j \in \{ 1,2,\dots,n \}$ such that
+		      \begin{align*}
+			      1=y_i =  & \langle \textbf{w}^*, \textbf{x}_i \rangle + b^*, \\
+			      -1=y_j = & \langle \textbf{w}^*, \textbf{x}_j \rangle + b^*.
+		      \end{align*}
+		\item Show that the optimal solution to problem (\ref{prob:SVM}) is unique.
+		\item Find the dual problem of (\ref{prob:SVM}) and the corresponding optimal conditions.
+	\end{enumerate}
 
 \end{exercise}
 \begin{solution}
@@ -230,42 +231,42 @@ We denote the feasible set of the problem in (\ref{prob:SVM}) by $$\mathcal{F}=\
 
 \newpage
 \begin{exercise}[Visualization Lemma]
-Consider the primal problem as follows.
-\begin{align}\label{prob:primal-vec}
-\min_{\mathbf{x}}\,&f(\mathbf{x})\\ \nonumber
-{\rm s.t.}\,&\mathbf{g}(\mathbf{x})\leq0,\\ \nonumber
-&\mathbf{h}(\mathbf{x})=0, \\ \nonumber
-&\mathbf{x}\in X,
-\end{align}
-where $\mathbf{x}\in\mathbb{R}^n$, $f:\mathbb{R}^n\rightarrow\mathbb{R}$, $\mathbf{g}:\mathbb{R}^n\rightarrow\mathbb{R}^m$, $\mathbf{h}:\mathbb{R}^n\rightarrow\mathbb{R}^p$, and $X\subseteq\mathbb{R}^n$. The functions $f$, $\mathbf{g}$, and $\mathbf{h}$ are continuously differentiable. 
+	Consider the primal problem as follows.
+	\begin{align}\label{prob:primal-vec}
+		\min_{\mathbf{x}}\, & f(\mathbf{x})                \\ \nonumber
+		{\rm s.t.}\,        & \mathbf{g}(\mathbf{x})\leq0, \\ \nonumber
+		                    & \mathbf{h}(\mathbf{x})=0,    \\ \nonumber
+		                    & \mathbf{x}\in X,
+	\end{align}
+	where $\mathbf{x}\in\mathbb{R}^n$, $f:\mathbb{R}^n\rightarrow\mathbb{R}$, $\mathbf{g}:\mathbb{R}^n\rightarrow\mathbb{R}^m$, $\mathbf{h}:\mathbb{R}^n\rightarrow\mathbb{R}^p$, and $X\subseteq\mathbb{R}^n$. The functions $f$, $\mathbf{g}$, and $\mathbf{h}$ are continuously differentiable.
 
-The Lagrangian $L:\mathbb{R}^n\times \mathbb{R}^m\times \mathbb{R}^p\rightarrow\mathbb{R}$ associated with the problem in (\ref{prob:primal-vec}) takes the form of
-\begin{align}\label{def:Lagrangian}
-	L(\mathbf{x},\lambda,\mu)=f(\mathbf{x})+\sum_{i=1}^m\lambda_ig_i(\mathbf{x})+\sum_{i=1}^p\mu_ih_i(\mathbf{x}).
-\end{align}
+	The Lagrangian $L:\mathbb{R}^n\times \mathbb{R}^m\times \mathbb{R}^p\rightarrow\mathbb{R}$ associated with the problem in (\ref{prob:primal-vec}) takes the form of
+	\begin{align}\label{def:Lagrangian}
+		L(\mathbf{x},\lambda,\mu)=f(\mathbf{x})+\sum_{i=1}^m\lambda_ig_i(\mathbf{x})+\sum_{i=1}^p\mu_ih_i(\mathbf{x}).
+	\end{align}
 
-Let
-\begin{align}\label{def:image-set}
-	\mathbb{R}^{m+p+1}\supseteq S=\{(\mathbf{g}(\mathbf{x}),\mathbf{h}(\mathbf{x}),f(\mathbf{x})):\mathbf{x}\in X\}.
-\end{align}
+	Let
+	\begin{align}\label{def:image-set}
+		\mathbb{R}^{m+p+1}\supseteq S=\{(\mathbf{g}(\mathbf{x}),\mathbf{h}(\mathbf{x}),f(\mathbf{x})):\mathbf{x}\in X\}.
+	\end{align}
 
-Show that the results as follows (hint: see Fig. \ref{fig:visualization-lemma}).
+	Show that the results as follows (hint: see Fig. \ref{fig:visualization-lemma}).
 
-\begin{lemma}
-	\textbf{\textup {Visualization Lemma}}
-	\begin{enumerate}
-		\item The hyperplane with normal $(\lambda,\mu,1)$ that passes through a vector $(\mathbf{g}(\mathbf{x}),\mathbf{h}(\mathbf{x}),f(\mathbf{x}))$ intercepts the vertical axis $\{(\mathbf{0},z):z\in\mathbb{R}\}$ at the level $L(\mathbf{x},\lambda,\mu)$.
-		
-		\item Among all hyperplanes with normal $(\lambda,\mu,1)$ that contains in their positive halfspace the set $S$ defined in (\ref{def:image-set}), the highest attained level of interception of the vertical axis is $\inf_{\mathbf{x}\in X}\,L(\mathbf{x},\lambda,\mu)$.
-		
-		\item $(\lambda^*,\mu^*)$ is a geometric multiplier if and only if $\lambda^*\geq0$ and among all hyperplanes with normal $(\lambda^*,\mu^*,1)$ that contain in their positive halfspace the set $S$, the highest attained level of of interception of the vertical axis is $f^*$, where
-		\begin{align*}
-		    f^*=\min\{f(\mathbf{x}):\mathbf{g}(\mathbf{x})\leq0,\mathbf{h}(\mathbf{x})=0,\mathbf{x}\in X)\}.
-		\end{align*}
-	\end{enumerate}
-\end{lemma}
+	\begin{lemma}
+		\textbf{\textup {Visualization Lemma}}
+		\begin{enumerate}
+			\item The hyperplane with normal $(\lambda,\mu,1)$ that passes through a vector $(\mathbf{g}(\mathbf{x}),\mathbf{h}(\mathbf{x}),f(\mathbf{x}))$ intercepts the vertical axis $\{(\mathbf{0},z):z\in\mathbb{R}\}$ at the level $L(\mathbf{x},\lambda,\mu)$.
+
+			\item Among all hyperplanes with normal $(\lambda,\mu,1)$ that contains in their positive halfspace the set $S$ defined in (\ref{def:image-set}), the highest attained level of interception of the vertical axis is $\inf_{\mathbf{x}\in X}\,L(\mathbf{x},\lambda,\mu)$.
+
+			\item $(\lambda^*,\mu^*)$ is a geometric multiplier if and only if $\lambda^*\geq0$ and among all hyperplanes with normal $(\lambda^*,\mu^*,1)$ that contain in their positive halfspace the set $S$, the highest attained level of of interception of the vertical axis is $f^*$, where
+			      \begin{align*}
+				      f^*=\min\{f(\mathbf{x}):\mathbf{g}(\mathbf{x})\leq0,\mathbf{h}(\mathbf{x})=0,\mathbf{x}\in X)\}.
+			      \end{align*}
+		\end{enumerate}
+	\end{lemma}
 \end{exercise}
-\begin{figure}[!h] 
+\begin{figure}[!h]
 	\centering{
 		\subfigure[] { \label{fig:geometric-multiplier-0}
 			\includegraphics[width=0.45\columnwidth]{figures/geometric-multipliers-0.pdf}
@@ -284,32 +285,32 @@ Show that the results as follows (hint: see Fig. \ref{fig:visualization-lemma}).
 ${}$
 \newpage
 \begin{exercise}[Geometric Multiplier]
-Let $(\lambda^*,\mu^*)$ be a geometric multiplier. Show that $\mathbf{x}^*$ is a global minimum of the primal problem (\ref{prob:primal-vec}) if and only if $\mathbf{x}^*$ is feasible and 
-\begin{align*}
-	&\mathbf{x}^*\in\argmin_{\mathbf{x}\in X}\,L(\mathbf{x},\lambda^*,\mu^*),\\
-	&\lambda_i^*g_i(\mathbf{x}^*)=0,\,i=1,\ldots,m.
-\end{align*}
+	Let $(\lambda^*,\mu^*)$ be a geometric multiplier. Show that $\mathbf{x}^*$ is a global minimum of the primal problem (\ref{prob:primal-vec}) if and only if $\mathbf{x}^*$ is feasible and
+	\begin{align*}
+		 & \mathbf{x}^*\in\argmin_{\mathbf{x}\in X}\,L(\mathbf{x},\lambda^*,\mu^*), \\
+		 & \lambda_i^*g_i(\mathbf{x}^*)=0,\,i=1,\ldots,m.
+	\end{align*}
 \end{exercise}
 
 \newpage
 \begin{exercise}[Lagrange Dual Problem]
-Consider the primal problem (\ref{prob:primal-vec}) and the Lagrangian (\ref{def:Lagrangian}). We define the dual function for $(\lambda,\mu)\in\mathbb{R}^{m+p}$ by
-\begin{align*}
-	q(\lambda,\mu)=\inf_{\mathbf{x}\in X}\,L(\mathbf{x},\lambda,\mu).
-\end{align*}
-The domain of $q$ is 
-\begin{align*}
-    \dom(q)=\{(\lambda,\mu):q(\lambda,\mu)>-\infty\}.
-\end{align*}
-The dual problem is
-\begin{align*}
-	\sup\,&q(\lambda,\mu),\\
-	\mbox{s.t. }&\lambda\geq0.
-\end{align*}
-\begin{enumerate}
-    \item Show that $\dom(q)$ is convex.
-    \item Show that $-q(\lambda,\mu)$ is a convex function.
-\end{enumerate}
+	Consider the primal problem (\ref{prob:primal-vec}) and the Lagrangian (\ref{def:Lagrangian}). We define the dual function for $(\lambda,\mu)\in\mathbb{R}^{m+p}$ by
+	\begin{align*}
+		q(\lambda,\mu)=\inf_{\mathbf{x}\in X}\,L(\mathbf{x},\lambda,\mu).
+	\end{align*}
+	The domain of $q$ is
+	\begin{align*}
+		\dom(q)=\{(\lambda,\mu):q(\lambda,\mu)>-\infty\}.
+	\end{align*}
+	The dual problem is
+	\begin{align*}
+		\sup\,       & q(\lambda,\mu), \\
+		\mbox{s.t. } & \lambda\geq0.
+	\end{align*}
+	\begin{enumerate}
+		\item Show that $\dom(q)$ is convex.
+		\item Show that $-q(\lambda,\mu)$ is a convex function.
+	\end{enumerate}
 \end{exercise}
 
 
@@ -318,7 +319,7 @@ The dual problem is
 
 \newpage
 \begin{exercise}[Duality Gap]
-Duality gap is defined by
+	Duality gap is defined by
 	\begin{align*}
 		f^*-q^*.
 	\end{align*}
@@ -333,17 +334,17 @@ Duality gap is defined by
 \begin{exercise}[Optimality Conditions]
 	Show that a pair $\mathbf{x}^*$ and $(\lambda^*,\mu^*)$ is an optimal solution and geometric multiplier pair if and only if
 	\begin{align}\label{cond:primal-feasibility}
-		\mathbf{x}^*\in X,\,\mathbf{g}(\mathbf{x}^*)\leq0,\mathbf{h}(\mathbf{x}^*)=0,\hspace{18.5mm}(\mbox{\textup{Primal Feasibility}}),&\\ \label{cond:dual-feasibility}
-		\lambda^*\geq0,\hspace{22mm}(\mbox{\textup{Dual Feasibility}}),&\\ \label{cond:lagrangian-optimality}
-		\mathbf{x}^*\in\argmin_{\mathbf{x}\in X}\,L(\mathbf{x},\lambda^*,\mu^*),\hspace{10mm}(\mbox{\textup{Lagrangian Optimality}}),&\\ \label{cond:complementary-slackness}
-		\lambda^*_ig_i(\mathbf{x}^*)=0,\,i=1,\ldots,m,\hspace{5mm}(\mbox{\textup{Complementary Slackness}}).&
+		\mathbf{x}^*\in X,\,\mathbf{g}(\mathbf{x}^*)\leq0,\mathbf{h}(\mathbf{x}^*)=0,\hspace{18.5mm}(\mbox{\textup{Primal Feasibility}}), & \\ \label{cond:dual-feasibility}
+		\lambda^*\geq0,\hspace{22mm}(\mbox{\textup{Dual Feasibility}}),                                                                   & \\ \label{cond:lagrangian-optimality}
+		\mathbf{x}^*\in\argmin_{\mathbf{x}\in X}\,L(\mathbf{x},\lambda^*,\mu^*),\hspace{10mm}(\mbox{\textup{Lagrangian Optimality}}),     & \\ \label{cond:complementary-slackness}
+		\lambda^*_ig_i(\mathbf{x}^*)=0,\,i=1,\ldots,m,\hspace{5mm}(\mbox{\textup{Complementary Slackness}}).                              &
 	\end{align}
 \end{exercise}
 
 
 \newpage
 \begin{exercise}[Saddle Point Interpretation]
-	 Show that a pair $\mathbf{x}^*$ and $(\lambda^*,\mu^*)$ is an optimal solution-geometric multiplier pair if and only if $\mathbf{x}^*\in X$, $\lambda^*\geq0$, and $(\mathbf{x}^*,\lambda^*,\mu^*)$ is a saddle point of the Lagrangian, in the sense that
+	Show that a pair $\mathbf{x}^*$ and $(\lambda^*,\mu^*)$ is an optimal solution-geometric multiplier pair if and only if $\mathbf{x}^*\in X$, $\lambda^*\geq0$, and $(\mathbf{x}^*,\lambda^*,\mu^*)$ is a saddle point of the Lagrangian, in the sense that
 	\begin{align}\label{cond:saddle-Lagrangian}
 		L(\mathbf{x}^*,\lambda,\mu)\leq L(\mathbf{x}^*,\lambda^*,\mu^*)\leq L(\mathbf{x},\lambda^*,\mu^*),\,\forall\,\mathbf{x}\in X,\,\lambda\geq0.
 	\end{align}
@@ -352,31 +353,31 @@ Duality gap is defined by
 
 \newpage
 \begin{exercise}
-     Recall that the soft margin SVM takes the form of
-\begin{align}\label{prob:soft-SVM}
-\min_{\mathbf{w},b,\xi}\,&\frac{1}{2}\|\mathbf{w}\|^2+C\sum_{i=1}^n\xi_i,\\ \nonumber
-{\rm s.t.\,}&\,y_i(\langle\mathbf{w},\mathbf{x}_i\rangle+b)\geq1-\xi_i,i=1,\ldots,n,&\\ \nonumber
-&\,\xi_i\geq0,\,i=1,\ldots,n,
-\end{align}
-where $C>0$.
-The corresponding dual problem is
-\begin{align}\label{prob:dual-soft-SVM}
-		\min_{\alpha}\,&\frac{1}{2}\sum_{i=1}^n\sum_{j=1}^n\,\alpha_i\alpha_jy_iy_j\langle\mathbf{x}_i,\mathbf{x}_j\rangle-\sum_{i=1}^n\alpha_i\\\nonumber
-	\mbox{s.t. }\,&\sum_{i=1}^n\alpha_iy_i=0,\\\nonumber
-	&\alpha_i\in[0,C],i=1,\ldots,n.
-\end{align}
-\begin{enumerate}
-    \item Show that the problems (\ref{prob:soft-SVM}) and (\ref{prob:dual-soft-SVM}) always admit optimal solutions.
-    
-    \item Suppose that the training data consists of two data instances $x_1=1$ and $x_2=-1$, and the corresponding labels are $y_1=1$ and $y_2=-1$.
-    \begin{enumerate}
-        \item Please solve problem (\ref{prob:SVM}) and find the primal and dual optimal solutions.
-        \item Please solve problem (\ref{prob:soft-SVM}) with $C<\frac{1}{2}$ and find the primal and dual optimal solutions.
-    \end{enumerate}
+	Recall that the soft margin SVM takes the form of
+	\begin{align}\label{prob:soft-SVM}
+		\min_{\mathbf{w},b,\xi}\, & \frac{1}{2}\|\mathbf{w}\|^2+C\sum_{i=1}^n\xi_i,                           \\ \nonumber
+		{\rm s.t.\,}              & \,y_i(\langle\mathbf{w},\mathbf{x}_i\rangle+b)\geq1-\xi_i,i=1,\ldots,n, & \\ \nonumber
+		                          & \,\xi_i\geq0,\,i=1,\ldots,n,
+	\end{align}
+	where $C>0$.
+	The corresponding dual problem is
+	\begin{align}\label{prob:dual-soft-SVM}
+		\min_{\alpha}\, & \frac{1}{2}\sum_{i=1}^n\sum_{j=1}^n\,\alpha_i\alpha_jy_iy_j\langle\mathbf{x}_i,\mathbf{x}_j\rangle-\sum_{i=1}^n\alpha_i \\\nonumber
+		\mbox{s.t. }\,  & \sum_{i=1}^n\alpha_iy_i=0,                                                                                              \\\nonumber
+		                & \alpha_i\in[0,C],i=1,\ldots,n.
+	\end{align}
+	\begin{enumerate}
+		\item Show that the problems (\ref{prob:soft-SVM}) and (\ref{prob:dual-soft-SVM}) always admit optimal solutions.
 
-    \item Suppose that the training data consists of four data instances: $\mathbf{x}_1=(2,3)$, $\mathbf{x}_2=(1,2)$, $\mathbf{x}_3=(1,3)$, and $\mathbf{x}_4=(2,2)$, and the corresponding labels are $y_1=y_2=1$ and $y_3=y_4=-1$. Please solve the problem in (\ref{prob:dual-soft-SVM}) with $C=10$.
-\end{enumerate}
-Notice that, for the last two parts, you need to find all the primal and dual optimal solutions if they are not unique.
+		\item Suppose that the training data consists of two data instances $x_1=1$ and $x_2=-1$, and the corresponding labels are $y_1=1$ and $y_2=-1$.
+		      \begin{enumerate}
+			      \item Please solve problem (\ref{prob:SVM}) and find the primal and dual optimal solutions.
+			      \item Please solve problem (\ref{prob:soft-SVM}) with $C<\frac{1}{2}$ and find the primal and dual optimal solutions.
+		      \end{enumerate}
+
+		\item Suppose that the training data consists of four data instances: $\mathbf{x}_1=(2,3)$, $\mathbf{x}_2=(1,2)$, $\mathbf{x}_3=(1,3)$, and $\mathbf{x}_4=(2,2)$, and the corresponding labels are $y_1=y_2=1$ and $y_3=y_4=-1$. Please solve the problem in (\ref{prob:dual-soft-SVM}) with $C=10$.
+	\end{enumerate}
+	Notice that, for the last two parts, you need to find all the primal and dual optimal solutions if they are not unique.
 \end{exercise}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

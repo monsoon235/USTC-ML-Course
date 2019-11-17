@@ -759,14 +759,6 @@ ID: \id
 				      \mbox{s.t. }  & \alpha_1+\alpha_2 -\alpha_3 -\alpha_4=0 \\
 				                    & \alpha_i \in [0,10], i=1,2,3,4
 			      \end{aligned}$$
-		      %   令
-		      %   $$\nabla_{\alpha} F(\alpha)=\begin{pmatrix}
-		      % 	      13\alpha_1+8\alpha_2-11\alpha_3 -10\alpha_4 -1 \\
-		      % 	      8\alpha_1+5\alpha_2-7\alpha_3 -6\alpha_4    -1 \\
-		      % 	      -11\alpha_1-7\alpha_2+10\alpha_3+8\alpha_4 -1  \\
-		      % 	      -10\alpha_1-6\alpha_2+8\alpha_3+8\alpha_4 -1
-		      %       \end{pmatrix}$$
-		      %   用 $\alpha_4=\alpha_1+\alpha_2-\alpha_3$ 消去 $\alpha_4$, 得
 		      这是一个二次规划问题，编写以下 Python 程序进行求解：
 		      \begin{python}
 			      import numpy as np

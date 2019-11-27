@@ -38,6 +38,7 @@
 \usepackage{graphicx} % more modern
 \usepackage{subfigure}
 \usepackage{threeparttable}
+\usepackage{ctex}
 
 %%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%% Define math operator %%%%%
@@ -213,6 +214,62 @@ ID: \id
 	{\raggedright The dataset consists of five samples $x_1,x_2,x_3,x_4,x_5$. For each sample, we can observe the features $A_1,A_2,A_3$ and the corresponding response. \par}
 \end{table}
 \begin{solution}
+	$$S_0=\{x_1,x_2,x_3,x_4,x_5\}$$ \\
+	对 $S_0$ 进行计算：
+	$$\begin{aligned}
+			{\rm Entropy}(S_0)
+			 & = -\cfrac{3}{5}\log_2\cfrac{3}{5}-\cfrac{2}{5}\log_2\cfrac{2}{5}=0.97                    \\
+			{\rm Gain}(S_0,A_1)
+			 & = {\rm Entropy}(S_0)-\sum_{A_1\in\{0,1\}}\cfrac{|S_{A_1}|}{|S_0|}{\rm Entropy}(S_{A_1})  \\
+			 & =0.97
+			-\cfrac{1}{5}\times0
+			-\cfrac{4}{5}\times\left(-\cfrac{2}{4}\log_2\cfrac{2}{4}-\cfrac{2}{4}\log_2\cfrac{2}{4}\right)
+			=0.17                                                                                       \\
+			{\rm Gain}(S_0,A_2)
+			 & = {\rm Entropy}(S_0)-\sum_{A_2\in\{0,1\}}\cfrac{|S_{A_2}|}{|S_0|}{\rm Entropy}(S_{A_2})  \\
+			 & =0.97
+			-\cfrac{2}{5}\times0
+			-\cfrac{3}{5}\times\left(-\cfrac{1}{3}\log_2\cfrac{1}{3}-\cfrac{2}{3}\log_2\cfrac{2}{3}\right)
+			=0.42                                                                                       \\
+			{\rm Gain}(S_0,A_3)
+			 & = {\rm Entropy}(S_0) -\sum_{A_3\in\{0,1\}}\cfrac{|S_{A_3}|}{|S_0|}{\rm Entropy}(S_{A_3}) \\
+			 & =0.97
+			-\cfrac{3}{5}\times\left(-\cfrac{2}{3}\log_2\cfrac{2}{3}-\cfrac{1}{3}\log_2\cfrac{1}{3}\right)
+			-\cfrac{2}{5}\times\left(-\cfrac{1}{2}\log_2\cfrac{1}{2}-\cfrac{1}{2}\log_2\cfrac{1}{2}\right)
+			=0.02
+		\end{aligned}$$
+	所以选 $A_2$ 进行划分：
+	$$\begin{aligned}
+			S_1 & =\{x_1,x_2\}     \\
+			S_2 & =\{x_3,x_4,x_5\}
+		\end{aligned}$$
+	$S_1$ 中的全部样本 $Response=0$, 所以 $S_1$ 对应的 $Response=0$. \\
+	对 $S_2$ 进行计算：
+	$$\begin{aligned}
+			{\rm Entropy}(S_2)
+			 & = -\cfrac{1}{3}\log_2\cfrac{1}{3}-\cfrac{2}{3}\log_2\cfrac{2}{3}=0.92                   \\
+			{\rm Gain}(S_2,A_1)
+			 & = {\rm Entropy}(S_2)-\sum_{A_1\in\{0,1\}}\cfrac{|S_{A_1}|}{|S_2|}{\rm Entropy}(S_{A_1}) \\
+			 & =0.92
+			-\cfrac{1}{3}\times0
+			-\cfrac{2}{3}\times0
+			=0.92                                                                                      \\
+			{\rm Gain}(S_2,A_3)
+			 & = {\rm Entropy}(S_2)-\sum_{A_3\in\{0,1\}}\cfrac{|S_{A_3}|}{|S_2|}{\rm Entropy}(S_{A_3}) \\
+			 & =0.92
+			-\cfrac{2}{3}\times\left(-\cfrac{1}{2}\log_2\cfrac{1}{2}-\cfrac{1}{2}\log_2\cfrac{1}{2}\right)
+			-\cfrac{1}{3}\times0
+			=0.25
+		\end{aligned}$$
+	所以选 $A_1$ 进行划分：
+	$$\begin{aligned}
+			S_3 & =\{x_3\}     \\
+			S_4 & =\{x_4,x_5\}
+		\end{aligned}$$
+	$S_3$ 中的全部样本 $Response=0$, 所以 $S_1$ 对应的 $Response=0$. \\
+	$S_4$ 中的全部样本 $Response=1$, 所以 $S_1$ 对应的 $Response=1$. \\
+	最后生成的决策树为： \\
+	\includegraphics{solution1_tree.pdf}
 
 \end{solution}
 \newpage
@@ -233,7 +290,51 @@ ID: \id
 \end{exercise}
 
 \begin{solution}
+	\begin{enumerate}
+		\item $$\cfrac{\partial f_i}{\partial x_j} = \begin{cases}
+				      -\cfrac{\exp(x_i)\exp(x_j)}{\left( \sum_{k=1}^{n}{\exp(x_k)} \right)^2}
+				      = -f_i f_j
+				       & , i \neq j \\
+				      \cfrac{\exp(x_i)\sum_{k=1}^{n}{\exp(x_k)} - (\exp(x_i))^2}{\left( \sum_{k=1}^{n}{\exp(x_k)} \right)^2}
+				      =f_i - f_i^2
+				       & , i = j
+			      \end{cases}$$
+		      所以
+		      $$ \nabla f(x)
+			      = \begin{pmatrix}
+				      \cfrac{\partial f_1}{\partial x_1} & \cfrac{\partial f_2}{\partial x_1} & \cdots & \cfrac{\partial f_n}{\partial x_1} \\
+				      \cfrac{\partial f_1}{\partial x_2} & \cfrac{\partial f_2}{\partial x_2} & \cdots & \cfrac{\partial f_n}{\partial x_2} \\
+				      \vdots                             & \vdots                             & \ddots & \vdots                             \\
+				      \cfrac{\partial f_1}{\partial x_n} & \cfrac{\partial f_2}{\partial x_n} & \cdots & \cfrac{\partial f_n}{\partial x_n}
+			      \end{pmatrix}= \begin{pmatrix}
+				      f_1-f_1^2 & -f_2 f_1  & \cdots & -f_n f_1  \\
+				      -f_1 f_2  & f_2-f_2^2 & \cdots & -f_n f_2  \\
+				      \vdots    & \vdots    & \ddots & \vdots    \\
+				      -f_1 f_n  & -f_2 f_n  & \cdots & f_n-f_n^2
+			      \end{pmatrix}$$
+		      $$D f= (\nabla f)^\top=\begin{pmatrix}
+				      f_1-f_1^2 & -f_1 f_2  & \cdots & -f_1 f_n  \\
+				      -f_2 f_1  & f_2-f_2^2 & \cdots & -f_2 f_n  \\
+				      \vdots    & \vdots    & \ddots & \vdots    \\
+				      -f_n f_1  & -f_n f_2  & \cdots & f_n-f_n^2
+			      \end{pmatrix}$$
+		\item $$f_i(x-c)=\cfrac{\exp(x_i-c)}{\sum_{k=1}^{n}{\exp(x_k-c)}}=\cfrac{\exp(x_i)}{\sum_{k=1}^{n}{\exp(x_k)}}=f_i(x)$$
+		      所以 $f(x-c)=f(x)$
 
+		      当 $x_i$ 较大时，$\exp(x_i)$ 的计算容易导致溢出，因此设 $c=\max\{x_i\}, i=1,2,\cdots,n$.
+
+		      则 $x_i-c \leq0$, 可以保证计算不会溢出。
+		\item  $$\begin{aligned}
+				      \cfrac{\partial g(x)}{\partial x_j}
+				       & = -\sum_{i=1}^{n}{H_i\cfrac{\partial \log(f_i(x))}{\partial x_j}}                  \\
+				       & = -\sum_{i=1}^{n}{\cfrac{H_i}{f_i(x)} \cfrac{\partial f_i(x)}{\partial x_j}}       \\
+				       & = -\cfrac{H_j}{f_j(x)}(f_j-f_j^2) - \sum_{i\neq j}{\cfrac{H_i}{f_i(x)} (-f_i f_j)} \\
+				       & = H_j (f_j-1) + \sum_{i\neq j}{H_i f_j}                                            \\
+				       & = f_j - H_j
+			      \end{aligned}$$
+		      所以
+		      $$\nabla g(x)=f(x)-H$$
+	\end{enumerate}
 \end{solution}
 
 \newpage
@@ -282,14 +383,71 @@ ID: \id
 	\caption{The architecture of convolutional neural network} \label{tab:cnn}
 \end{table}
 \begin{solution}
+	\begin{enumerate}
+		\item $\nabla f_1(x) = \left( \cfrac{1}{n}, \cdots, \cfrac{1}{n} \right)^\top$
+		\item \begin{enumerate}
+			      \item \begin{enumerate}
+				            \item 当 $\exists x_i=x_j=\max\{x_1,\cdots,x_n\} ,i\neq j$ 时，设 $\varepsilon>0$，令
+				                  $$\begin{aligned}
+						                  x'  & = \left( x_1,\cdots,x_i+\varepsilon,\cdots,x_n \right)^\top \\
+						                  x'' & = \left( x_1,\cdots,x_i-\varepsilon,\cdots,x_n \right)^\top
+					                  \end{aligned}$$
+				                  则
+				                  $$\begin{aligned}
+						                  f_2(x')  & = x_i+\varepsilon \\
+						                  f_2(x'') & = x_j
+					                  \end{aligned}$$
+				                  所以
+				                  $$\begin{aligned}
+						                  \lim_{\varepsilon\to0} \cfrac{f_2(x')-f_2(x)}{\varepsilon}  & =1 \\
+						                  \lim_{\varepsilon\to0} \cfrac{f_2(x'')-f_2(x)}{\varepsilon} & =0
+					                  \end{aligned}$$
+				                  可知 $f_2(x)$ 在 $x$ 处对 $x_i$ 的偏导数不存在。
 
+				                  所以在这点 $f_2(x)$ 不可微。
+				            \item 当 $\exists x_i=\max\{x_1,\cdots,x_n\}$ 使得 $\forall j\neq i, x_j <x_i$ 时，设
+				                  $$0<\varepsilon<\cfrac{1}{2}\min\{x_i-x_1,\cdots,x_i-x_{i-1},x_i-x_{i+1},\cdots,x_i-x_n\}$$
+
+				                  则对于 $\forall x'$, 若 $\|x'-x\|\leq\varepsilon$，就有 $f_2(x')=x_i'$
+
+				                  所以在某一邻域中 $f_2(x)=x_i$, 所以在 $x$ 处可导。
+			            \end{enumerate}
+			            综上,可导点的集合为 $\{ x \mid \exists x_i,\text{s.t. }x_j < x_i, \forall j\neq i\}$
+			      \item 设 $f_2(x)=x_i$， 则
+			            $$d(x)=(\underbrace{0,\cdots,0}_{\text{i-1 个 0}},\underbrace{1}_{\text{第 i 个分量为 1}},\underbrace{0,\cdots,0}_{\text{n-i 个 0}})^\top$$
+			            是一个 subgradient. 证明如下：
+			            $$f_2(x)+\langle d(x),y-x \rangle=x_i+(y_i-x_i)=y_i \leq f_2(y)$$
+		      \end{enumerate}
+		\item 每层计算后的 feature maps 和所用的参数数量如下： \\
+		      \begin{center}
+			      \begin{tabular}{|c|c|c|}
+				      \hline
+				      \textbf{Layer} & \textbf{size of feature maps}                       & \textbf{number of parameters}  \\
+				      \hline
+				      conv3-64       & $64\times(386-3+1)^2=9437184$                       & $3\times3^2\times64=1728$      \\
+				      \hline
+				      max pool       & $64\times\left(\cfrac{384-3}{3}+1\right)^2=1048576$ & 0                              \\
+				      \hline
+				      conv3-256      & $256\times(128-3+1)^2=4064256$                      & $64\times3^2\times256=147456$  \\
+				      \hline
+				      conv1-512      & $512\times(126-1+1)^2=8128512$                      & $256\times1^2\times512=131072$ \\
+				      \hline
+				      max pool       & $512\times\left(\cfrac{126-3}{3}+1\right)^2=903168$ & 0                              \\
+				      \hline
+				      FC-2048        & 2048                                                & $2048\times903168=1849688064$  \\
+				      \hline
+				      FC-1000        & 1000                                                & $1000\times2048=2048000$       \\
+				      \hline
+			      \end{tabular}
+		      \end{center}
+	\end{enumerate}
 \end{solution}
 
 \newpage
 
 \begin{exercise}[Matrix Calculus \textnormal{20pts}]
 
-	\indent Let $L = f(h(Ax+b))$, where $A \in \mathbb{R}^{m \times n}$, $x \in \mathbb{R}^n$, $b \in \mathbb{R}^m$, and $f: \mathbb{R}^m \rightarrow \mathbb{R}$. Define $z =  Ax + b \in \mathbb{R}^m$ and $w =  h(z)  = ( \sigma(z_1),\ldots,\sigma(z_n) )^{\top}$, where $z_i$ is the $i^{th}$ component of $z$ and
+	\indent Let $L = f(h(Ax+b))$, where $A \in \mathbb{R}^{m \times n}$, $x \in \mathbb{R}^n$, $b \in \mathbb{R}^m$, and $f: \mathbb{R}^m \rightarrow \mathbb{R}$. Define $z =  Ax + b \in \mathbb{R}^m$ and $w =  h(z)  = ( \sigma(z_1),\ldots,\sigma(z_m) )^{\top}$, where $z_i$ is the $i^{th}$ component of $z$ and
 	\begin{align*}
 		\sigma(z_i) = \frac{1}{1+\exp(-z_i)}.
 	\end{align*}
@@ -313,7 +471,36 @@ ID: \id
 
 \end{exercise}
 \begin{solution}
-
+	\begin{enumerate}
+		\item $\nabla_x L = \nabla_x z(x) \nabla_z h(z) \nabla_w f(w)$
+		      $$\nabla_x z(x)=A^\top$$
+		      由于
+		      $$\cfrac{\partial \sigma(z_i)}{\partial z_j}=\begin{cases}
+				      0                                    & ,i \neq j \\
+				      \cfrac{\exp(-z_i)}{(1+\exp(-z_i))^2} & ,i=j
+			      \end{cases}$$
+		      所以
+		      $$\nabla_z h(z)=\begin{pmatrix}
+				      \cfrac{\exp(-z_1)}{(1+\exp(-z_1))^2} &        &                                      \\
+				                                           & \ddots &                                      \\
+				                                           &        & \cfrac{\exp(-z_m)}{(1+\exp(-z_m))^2}
+			      \end{pmatrix}$$
+		      所以
+		      $$\nabla_x L= A^\top\begin{pmatrix}
+				      \cfrac{\exp(-z_1)}{(1+\exp(-z_1))^2} &        &                                      \\
+				                                           & \ddots &                                      \\
+				                                           &        & \cfrac{\exp(-z_m)}{(1+\exp(-z_m))^2}
+			      \end{pmatrix}\nabla_w f$$
+		\item $$\cfrac{\partial L}{\partial A_{ij}}=\cfrac{\partial f}{\partial w_i}\cdot\cfrac{\partial w_i}{\partial z_i}\cdot\cfrac{\partial z_i}{\partial A_{ij}}
+			      =(\nabla_w f)_i\cdot \cfrac{\exp(-z_i)}{(1+\exp(-z_i))^2}\cdot x_j$$
+		      所以
+		      $$\nabla_A L = \nabla_z h(z)\cdot\nabla_w f\cdot x^\top=
+			      \begin{pmatrix}
+				      \cfrac{\exp(-z_1)}{(1+\exp(-z_1))^2} &        &                                      \\
+				                                           & \ddots &                                      \\
+				                                           &        & \cfrac{\exp(-z_m)}{(1+\exp(-z_m))^2}
+			      \end{pmatrix}\nabla_w f \cdot x^\top$$
+	\end{enumerate}
 \end{solution}
 
 

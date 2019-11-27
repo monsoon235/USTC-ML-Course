@@ -6,3 +6,4 @@ venv
 *.pdf
 *.synctex.gz
 !HW4/figures/*.pdf
+!HW5/solution1_tree.pdf

@@ -7,3 +7,4 @@ venv
 *.synctex.gz
 !HW4/figures/*.pdf
 !HW5/solution1_tree.pdf
+!HW7/images/Grid_World.pdf

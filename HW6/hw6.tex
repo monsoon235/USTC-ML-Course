@@ -363,7 +363,44 @@ ID: \id
                         $$\mathcal{C}(A)\subseteq\mathcal{C}(C)$$
                         所以 $$\mathcal{C}(C)=\mathcal{C}(A)$$
               \end{enumerate}
-        \item
+        \item \begin{enumerate}
+                  \item $P_{\mathcal{C}(A)}$ 是唯一的，证明如下： \\
+                        假设不唯一，设 $\mathbf{z}_1 \neq \mathbf{z}_2, \mathbf{z}_1,\mathbf{z}_2 \in \mathcal{C}(A)$ 且
+                        $$\|\mathbf{x}-\mathbf{z}_1\|_2=\|\mathbf{x}-\mathbf{z}_2\|_2
+                            =\min_{\mathbf{z}\in\mathbb{R}^m} \|\mathbf{x}-\mathbf{z}\|_2, \mathbf{z}\in \mathcal{C}(A)$$
+                        于是
+                        $$\begin{aligned}
+                                \|\mathbf{x}-\cfrac{\mathbf{z}_1+\mathbf{z}_2}{2}\|_2^2
+                                 & = \| \cfrac{\mathbf{x}-\mathbf{z}_1}{2}+\cfrac{\mathbf{x}-\mathbf{z}_2}{2} \|_2^2                             \\
+                                 & \leq 2 \left( \|\cfrac{\mathbf{x}-\mathbf{z}_1}{2}\|_2^2 + \|\cfrac{\mathbf{x}-\mathbf{z}_2}{2}\|_2^2 \right) \\
+                                 & = \cfrac{\|\mathbf{x}-\mathbf{z}_1\|_2^2+\|\mathbf{x}-\mathbf{z}_2\|_2^2}{2}                                  \\
+                                 & = \min_{\mathbf{z}\in\mathbb{R}^m} \|\mathbf{x}-\mathbf{z}\|_2
+                            \end{aligned}$$
+                        与假设矛盾。所以 $\|\mathbf{x}-\mathbf{z}\|_2$ 取到最小值时 $\mathbf{z}$ 唯一，因此 $P_{\mathcal{C}(A)}$ 唯一。\\
+                        设 $\mathbf{z}=A\mathbf{w}, \mathbf{w}\in\mathbb{R}^n$.
+                        $$\|\mathbf{x}-\mathbf{z}\|_2^2
+                            =\|\mathbf{x}-A\mathbf{w}\|_2^2$$
+                        $$\nabla_\mathbf{w} \|\mathbf{x}-A\mathbf{w}\|_2^2
+                            =-2A^\top (\mathbf{x}-A\mathbf{w}) =0$$
+                        所以 $$A^\top \mathbf{x}=A^\top A \mathbf{w}$$
+                        % todo 证明满秩
+                        所以 $$\mathbf{w}=\left( A^\top A \right)^{-1}A^\top \mathbf{x}$$
+                        所以 $$P_{\mathcal{C}(A)}(\mathbf{x})=A \left( A^\top A \right)^{-1}A^\top \mathbf{x}$$
+                        % 所以 $$P_{\mathcal{C}(A)}=A \left( A^\top A \right)^{-1}A^\top$$
+                  \item 由 $$P_{\mathcal{C}(A)}(\mathbf{x})=A \left( A^\top A \right)^{-1}A^\top \mathbf{x}$$
+                        以 $A$ 的列向量为基，$P_{\mathcal{C}(A)}(\mathbf{x})$ 的坐标为
+                        $$\left( A^\top A \right)^{-1}A^\top \mathbf{x}$$
+                        % todo
+                        这个坐标是唯一的。
+              \end{enumerate}
+        \item \begin{enumerate}
+                  \item 
+                  \item
+              \end{enumerate}
+        \item \begin{enumerate}
+                  \item 
+                  \item
+              \end{enumerate}
     \end{enumerate}
 \end{solution}
 
@@ -425,7 +462,35 @@ ID: \id
 \end{exercise}
 
 \begin{solution}
-
+    \begin{enumerate}
+        \item \begin{enumerate}
+                  \item 
+                  \item 
+                  \item 
+                  \item 
+              \end{enumerate}
+        \item \begin{enumerate}
+                  \item  设 $\mathbf{a}_{i,*}$ 为 $A$ 的第 $i$ 行，则 $A^\top$ 的第 $i$ 列为 $\mathbf{a}_{i,*}^\top$.
+                        由5.1 小题
+                        $$A^\top A=\sum_{i=1}^{m}\mathbf{a}_{i,*}^\top \mathbf{a}_{i,*}$$
+                        $$\tr \left( \mathbf{a}_{i,*}^\top \mathbf{a}_{i,*} \right)=\sum_{j=1}^{n} a_{i,j}^2$$
+                        所以 $$\tr \left( A^\top A \right)=\sum_{i=1}^{m} \tr \left( \mathbf{a}_{i,*}^\top \mathbf{a}_{i,*} \right)=\sum_{i=1}^{m} \sum_{j=1}^{n} a_{i,j}^2$$
+                        即
+                        $$\|A\|_F^2=\tr \left(A^\top A \right)$$
+                  \item 因为 $\langle \mathbf{a},\mathbf{b} \rangle=0$, 所以
+                        $$A^\top B=\mathbf{0}, B^\top A=\mathbf{0}$$
+                        $$\begin{aligned}
+                                \|A+B\|_F^2
+                                 & = \tr \left( \left(A+B\right)^\top \left(A+B\right) \right)                                                              \\
+                                 & = \tr \left( \left(A^\top+B^\top\right) \left(A+B\right) \right)                                                         \\
+                                 & = \tr \left( A^\top A \right) + \tr \left( A^\top B \right) + \tr \left( B^\top A \right)  + \tr \left( B^\top B \right) \\
+                                 & =\tr \left( A^\top A \right) + \tr \left( B^\top B \right)                                                               \\
+                                 & = \|A\|_F^2 +\|B\|_F^2
+                            \end{aligned}$$
+              \end{enumerate}
+        \item
+        \item
+    \end{enumerate}
 \end{solution}
 
 \newpage
@@ -462,7 +527,18 @@ ID: \id
 \end{exercise}
 
 \begin{solution}
-
+    \begin{enumerate}
+        \item
+        \item $$f(\mathbf{g})
+                  =\tr \left( \mathbf{g}^\top S \mathbf{g}\right)
+                  =\mathbf{g}^\top S \mathbf{g}$$
+              $$\|\mathbf{g}\|_2=\mathbf{g}^\top \mathbf{g}=1$$
+              令
+              $$\nabla_\mathbf{g} f(\mathbf{g})=\left( S^\top +S \right) \mathbf{g}= 0$$
+        \item
+        \item
+        \item
+    \end{enumerate}
 \end{solution}
 
 

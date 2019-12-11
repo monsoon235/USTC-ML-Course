@@ -248,7 +248,51 @@ ID: \id
 
 \begin{solution}
     $VC(H)=3$, 证明如下：
-
+    \begin{enumerate}
+        \item 先证明 $VC(H)\geq3$. \\
+              不妨设样本 $\mathbf{x}$ 对应的标签取值为 $y\in\{-1,1\}$. \\
+              设 $\mathbf{x}\in\mathbb{R}^2$ 为一个样本，则令
+              $$\overline{\mathbf{x}}=\begin{pmatrix}
+                      \mathbf{x} \\
+                      1
+                  \end{pmatrix}$$
+              一个 $\mathbb{R}^2$ 上的线性阈值函数可以表示为
+              $$f(\mathbf{x})=\text{sign} \left(\mathbf{w}^\top \overline{\mathbf{x}}\right)$$
+              设 $\mathbf{x}_1, \mathbf{x}_2, \mathbf{x}_3 \in \mathbb{R}^2$ 为 3 个样本，对应的标签为 $y_1, y_2, y_3$. 令
+              $$X_1=(\overline{\mathbf{x}}_1, \overline{\mathbf{x}}_2, \overline{\mathbf{x}}_3 )\in \mathbb{R}^{3\times 3}$$
+              设 $z_1, z_2, z_3$ 取值满足
+              $$\begin{aligned}
+                      \text{sign}(z_1)=y_1 \\
+                      \text{sign}(z_2)=y_2 \\
+                      \text{sign}(z_3)=y_3
+                  \end{aligned}$$
+              对于线性方程组 $$X_1^\top \mathbf{w}=\begin{pmatrix}
+                      z_1 \\z_2 \\z_3
+                  \end{pmatrix}$$
+              如果 $\mathbf{x}_1, \mathbf{x}_2, \mathbf{x}_3$ 线性无关，则 $\rank{X_1}=3$, 此方程组一定有解。\\
+              即一定存在 $\mathbf{w}$ 能给 $\mathbf{x}_1, \mathbf{x}_2, \mathbf{x}_3$ 正确分类。\\
+              所以 $VC(H)\geq3$.
+        \item 再证明 $VC(H)<4$. \\
+              设 $\mathbf{x}_1, \mathbf{x}_2, \mathbf{x}_3, \mathbf{x}_4$ 为四个样本，对应的标签分别为 $y_1, y_2, y_3, y_4$. 设
+              $$X_2=(\overline{\mathbf{x}}_1, \overline{\mathbf{x}}_2, \overline{\mathbf{x}}_3, \overline{\mathbf{x}}_4) \in \mathbb{R}^{3\times 4}$$
+              显然 $\rank{X_2}<4$, $\overline{\mathbf{x}}_1, \overline{\mathbf{x}}_2, \overline{\mathbf{x}}_3, \overline{\mathbf{x}}_4$ 线性相关。 \\
+              不妨设 $$\overline{\mathbf{x}}_4=\alpha_1 \overline{\mathbf{x}}_1 +\alpha_2 \overline{\mathbf{x}}_2 +\alpha_3 \overline{\mathbf{x}}_3$$
+              $\alpha_1, \alpha_2, \alpha_3$ 不全为 $0$. \\
+              所以
+              $$\mathbf{w}^\top \overline{\mathbf{x}}_4
+                  = \alpha_1 \left( \mathbf{w}^\top \overline{\mathbf{x}}_1 \right)
+                  + \alpha_2 \left( \mathbf{w}^\top \overline{\mathbf{x}}_2 \right)
+                  + \alpha_3 \left( \mathbf{w}^\top \overline{\mathbf{x}}_3 \right)$$
+              若 $y_1=y_2=y_3=1, y_4=-1$, 则
+              $$\begin{aligned}
+                      \mathbf{w}^\top \overline{\mathbf{x}}_1 & >0 \\
+                      \mathbf{w}^\top \overline{\mathbf{x}}_2 & >0 \\
+                      \mathbf{w}^\top \overline{\mathbf{x}}_3 & >0
+                  \end{aligned}$$
+              则 $\mathbf{w}^\top \overline{\mathbf{x}}_4>0$, $y_4=1$, 无论 $\mathbf{w}$ 取何值，一定会发生分类错误。\\
+              所以 $VC(H)<4$.
+    \end{enumerate}
+    综上 $VC(H)=3$.
 \end{solution}
 
 \newpage
@@ -261,7 +305,27 @@ ID: \id
 
 
 \begin{solution}
-
+    设 $\hat{a}, \hat{b}$ 是 $a,b$ 的估计。设 $0\leq t\leq \epsilon$.
+    $$\begin{aligned}
+            a^+ & =\sup \{\tau \geq a : \int_a^\tau p(x)\text{d}x=t\}          \\
+            a^- & =\inf \{\tau \leq a : \int_\tau^a p(x)\text{d}x=t\}          \\
+            b^+ & =\sup \{\tau \geq b : \int_b^\tau p(x)\text{d}x=\epsilon-t\} \\
+            b^- & =\inf \{\tau \leq b : \int_\tau^b p(x)\text{d}x=\epsilon-t\}
+        \end{aligned}$$
+    $$\exists\, h\in VS_{H,D} \mbox{ and } error_{\mathcal{D}}(h)>\epsilon
+        \implies
+        \hat{a}\notin [a^-,a^+] \mbox{ and } \hat{b}\notin [b^-,b^+]$$
+    所以
+    $$\begin{aligned}
+                 & \mathbf{P}[\exists\, h\in VS_{H,D} \mbox{ and } error_{\mathcal{D}}(h)>\epsilon]                                          \\
+            =    & \mathbf{P} [\hat{a}\notin [a^-,a^+] \mbox{ and } \hat{b}\notin [b^-,b^+]]                          \\
+            \leq & \mathbf{P} [\hat{a}\notin [a^-,a^+] \mbox{ or } \hat{b}\notin [b^-,b^+]]                          \\
+            \leq &\mathbf{P} [\hat{a}\notin [a^-,a^+]] + \mathbf{P} [\hat{b}\notin [b^-,b^+]] \\
+            \leq &\mathbf{P} [\hat{a}\notin [a^-,a^+] \mid t=\cfrac{\epsilon}{2}] + \mathbf{P} [\hat{b}\notin [b^-,b^+] \mid t=\cfrac{\epsilon}{2}] \\
+            \leq & 4 \exp(-\cfrac{m\epsilon}{2})
+        \end{aligned}$$
+        令 $4 \exp(-\cfrac{m\epsilon}{2}) \leq \delta$, 所以有 
+        $$m\geq \cfrac{2}{\epsilon} \ln \cfrac{4}{\delta}$$
 \end{solution}
 
 \newpage
@@ -364,42 +428,93 @@ ID: \id
                         所以 $$\mathcal{C}(C)=\mathcal{C}(A)$$
               \end{enumerate}
         \item \begin{enumerate}
-                  \item $P_{\mathcal{C}(A)}$ 是唯一的，证明如下： \\
-                        假设不唯一，设 $\mathbf{z}_1 \neq \mathbf{z}_2, \mathbf{z}_1,\mathbf{z}_2 \in \mathcal{C}(A)$ 且
-                        $$\|\mathbf{x}-\mathbf{z}_1\|_2=\|\mathbf{x}-\mathbf{z}_2\|_2
-                            =\min_{\mathbf{z}\in\mathbb{R}^m} \|\mathbf{x}-\mathbf{z}\|_2, \mathbf{z}\in \mathcal{C}(A)$$
-                        于是
-                        $$\begin{aligned}
-                                \|\mathbf{x}-\cfrac{\mathbf{z}_1+\mathbf{z}_2}{2}\|_2^2
-                                 & = \| \cfrac{\mathbf{x}-\mathbf{z}_1}{2}+\cfrac{\mathbf{x}-\mathbf{z}_2}{2} \|_2^2                             \\
-                                 & \leq 2 \left( \|\cfrac{\mathbf{x}-\mathbf{z}_1}{2}\|_2^2 + \|\cfrac{\mathbf{x}-\mathbf{z}_2}{2}\|_2^2 \right) \\
-                                 & = \cfrac{\|\mathbf{x}-\mathbf{z}_1\|_2^2+\|\mathbf{x}-\mathbf{z}_2\|_2^2}{2}                                  \\
-                                 & = \min_{\mathbf{z}\in\mathbb{R}^m} \|\mathbf{x}-\mathbf{z}\|_2
-                            \end{aligned}$$
-                        与假设矛盾。所以 $\|\mathbf{x}-\mathbf{z}\|_2$ 取到最小值时 $\mathbf{z}$ 唯一，因此 $P_{\mathcal{C}(A)}$ 唯一。\\
+                  \item $P_{\mathcal{C}(A)}$ 是唯一的。\\
                         设 $\mathbf{z}=A\mathbf{w}, \mathbf{w}\in\mathbb{R}^n$.
                         $$\|\mathbf{x}-\mathbf{z}\|_2^2
                             =\|\mathbf{x}-A\mathbf{w}\|_2^2$$
                         $$\nabla_\mathbf{w} \|\mathbf{x}-A\mathbf{w}\|_2^2
                             =-2A^\top (\mathbf{x}-A\mathbf{w}) =0$$
                         所以 $$A^\top \mathbf{x}=A^\top A \mathbf{w}$$
-                        % todo 证明满秩
+                        下面需要证明若 $A$ 是列满秩的，则 $A^\top A$ 是满秩的。证明如下：
+                        % 只需证明 $\rank{A}=\rank{A^\top A }$.
+                        \begin{enumerate}
+                            \item $\mathbf{x}\in P_{\mathcal{N}(A)} \implies A\mathbf{x}=0 \implies A^\top A \mathbf{x}=0 \implies \mathbf{x}\in P_{\mathcal{N}(A^\top A)}$
+                            \item $\mathbf{x}\in P_{\mathcal{N}(A^\top A)} \implies A^\top A \mathbf{x}=0 \implies \mathbf{x}^\top A^\top A \mathbf{x}=0 \\ \implies (A\mathbf{x})^\top (A\mathbf{x})=0 \implies A\mathbf{x}=0 \implies \mathbf{x}\in P_{\mathcal{N}(A)}$
+                        \end{enumerate}
+                        所以有 $P_{\mathcal{N}(A)}=P_{\mathcal{N}(A^\top A)}$.\\
+                        所以 $$\dim{P_{\mathcal{N}(A)}}=n-\rank{A}
+                            =\dim{P_{\mathcal{N}(A^\top A)}}=n-\rank{A^\top A}$$
+                        所以 $$\rank{A}=\rank{A^\top A}=n$$
+                        所以 $A^\top A$ 满秩。\\
                         所以 $$\mathbf{w}=\left( A^\top A \right)^{-1}A^\top \mathbf{x}$$
                         所以 $$P_{\mathcal{C}(A)}(\mathbf{x})=A \left( A^\top A \right)^{-1}A^\top \mathbf{x}$$
-                        % 所以 $$P_{\mathcal{C}(A)}=A \left( A^\top A \right)^{-1}A^\top$$
+                        显然 $P_{\mathcal{C}(A)}=A \left( A^\top A \right)^{-1}A^\top$ 是唯一的。
                   \item 由 $$P_{\mathcal{C}(A)}(\mathbf{x})=A \left( A^\top A \right)^{-1}A^\top \mathbf{x}$$
                         以 $A$ 的列向量为基，$P_{\mathcal{C}(A)}(\mathbf{x})$ 的坐标为
                         $$\left( A^\top A \right)^{-1}A^\top \mathbf{x}$$
-                        % todo
                         这个坐标是唯一的。
               \end{enumerate}
         \item \begin{enumerate}
-                  \item 
-                  \item
+                  \item 是唯一的。只需要证明 $A$ 的列向量线性无关，即可转化成 3.(a). 证明如下：\\
+                        假设 $A$ 的列向量不是线性无关的，不妨设
+                        $$\mathbf{a}_1=\lambda_2 \mathbf{a}_2 + \cdots + \lambda_n \mathbf{a}_n$$
+                        $\lambda_2, \cdots, \lambda_n$ 不全为 $0$. 设 $i \neq 1$, 则
+                        $$\langle \mathbf{a}_1, \mathbf{a}_i \rangle
+                            = \lambda_2 \langle \mathbf{a}_2,\mathbf{a}_i \rangle
+                            +\cdots
+                            +\lambda_n \langle \mathbf{a}_n,\mathbf{a}_i \rangle
+                            =\lambda_i\langle \mathbf{a}_i,\mathbf{a}_i \rangle=\lambda_i=0$$
+                        所以 $\lambda_i =0 ,i =2,3,\cdots,n$, 矛盾。所以列向量线性无关。
+                        $$P_{\mathcal{C}(A)}(\mathbf{x})
+                            =A \left( A^\top A \right)^{-1}A^\top \mathbf{x}
+                            =A A^\top \mathbf{x}$$
+                        所以 $P_{\mathcal{C(A)}}=A A^\top$
+                  \item 令 $\widetilde{A}=AB, B\in\mathbb{R}^{n\times n}$. \\
+                  因为 $\rank{A}=\rank{\widetilde{A}}=n$, 所以 $B$ 满秩。
+                  $$\begin{aligned}
+                      P_{\mathcal{C}(\widetilde{A})}
+                      &= \widetilde{A} \left(\widetilde{A}^\top \widetilde{A}\right)^{-1} \widetilde{A}^\top \mathbf{x} \\
+                      &=AB \left(B^\top A^\top AB\right)^{-1} B^\top A^\top \mathbf{x} \\
+                        &=AB \left(B^\top B\right)^{-1} B^\top A^\top \mathbf{x} \\
+                        & =AA^\top \mathbf{x} \\
+                        &= P_{\mathcal{C}(A)}
+                  \end{aligned}$$
               \end{enumerate}
         \item \begin{enumerate}
-                  \item 
-                  \item
+                  \item $P_{\mathcal{C}(A)}$ 唯一。证明如下：\\
+                        不妨设 $A$ 的列秩为 $r$, 从 $A$ 的列中选 $r$ 个线性无关的列组成 $A'\in\mathbb{R}^{m\times r}$. \\
+                        同时设 $A=A' B, B\in \mathbb{R}^{r\times n}$. \\
+                        由 1.(a), $\mathcal{C}(A) \subseteq \mathcal{C}(A')$. \\
+                        若 $\mathbf{y} \in \mathcal{C}(A')$, 则
+                        $$\mathbf{y}=A' \mathbf{x}', \mathbf{x}'\in \mathbb{R}^{r}$$
+                        用 $\mathbf{x}'$ 按如下规则生成 $\mathbf{x}\in\mathbb{R}^n$:
+                        若 $A$ 中第 $i$ 列出现在 $A'$ 中，且为 $A'$ 中第 $j$ 列，则 $x_i=x'_j$, $\mathbf{x}$ 的其他分量为 $0$. \\
+                        所以有 $$\mathbf{y}=A' \mathbf{x}'=A\mathbf{x}$$
+                        所以 $\mathbf{y}\in\mathcal{C}(A)$, 所以 $\mathcal{C}(A)=\mathcal{C}(A')$, $P_{\mathcal{C}(A)}(\mathbf{x})=P_{\mathcal{C}(A')}(\mathbf{x})$. \\
+                        而由 2 $$P_{\mathcal{C}(A')}=A' \left( A'^\top A' \right)^{-1}A'^\top=P_{\mathcal{C}(A)}$$
+                        设 $A''$ 是用与 $A'$ 不同的方式选出的 $r$ 个线性无关列向量构成的的矩阵。\\
+                        设 $A''=A'D, D\in\mathbb{R}^{r\times r}$. \\
+                        因为 $\rank{A'}=\rank{A''}=r$, 所以 $D$ 满秩。\\
+                        $$\begin{aligned}
+                            A''\left(A''^\top A''\right)^{-1} A''^\top
+                            &= A'D \left( D^\top A'^\top A' D \right)^{-1} D^\top A'^\top \\
+                            &=A' D D^{-1} \left( A'^\top A' \right)^{-1} \left(D^\top\right)^{-1}D^\top A'^\top \\
+                            &=A' \left( A'^\top A' \right)^{-1} A'^\top
+                        \end{aligned}$$
+                        可以看到不同的列向量选择方式并不会对投影矩阵的计算产生影响。\\
+                        所以投影矩阵唯一。
+                        $$P_{\mathcal{C}(A)}=A' \left( A'^\top A' \right)^{-1}A'^\top$$
+                  \item 不唯一。\\
+                    不妨设 $A$ 的前 $r$ 个列向量为列向量的基向量
+                    $$A' =\begin{pmatrix}
+                        A_1, \cdots, A_r
+                    \end{pmatrix}$$
+                    令 $\mathbf{b} \in \mathbb{R}^n$ 满足 $A \mathbf{b} =0$, 显然 $b$ 不唯一。
+                    所以所有的可能坐标可以表示为
+                    $$\begin{pmatrix}
+                        \left( A'^\top A' \right)^{-1}A'^\top \mathbf{x} \\
+                        \mathbf{0}
+                    \end{pmatrix}+\mathbf{b}$$
               \end{enumerate}
     \end{enumerate}
 \end{solution}
@@ -463,12 +578,22 @@ ID: \id
 
 \begin{solution}
     \begin{enumerate}
-        \item \begin{enumerate}
-                  \item 
-                  \item 
-                  \item 
-                  \item 
-              \end{enumerate}
+        \item 由 SVD 性质，有
+              $$\Sigma^\top=\Sigma, U^\top=U^{-1}, V^\top=V^{-1}$$
+              \begin{enumerate}
+                  \item 由 SVD 的定义，有
+                  $$\mathbf{u}_{*,i}=A\cfrac{\mathbf{v}_{*,i}}{\sigma_i}$$
+                  所以 $\mathbf{u}_{*,i} \in \mathcal{C}(A)$. \\
+                  而 $\mathbf{u}_{*,1},\cdots, \mathbf{u}_{*,r}$ 构成 $\mathcal{C}(A)$ 的一组基。\\
+                  所以
+                  $$P_{\mathcal{C}(A)}(\mathbf{x})=P_{\mathcal{C}(U_1)}(\mathbf{x})=U_1 (U_1^\top U_1)^{-1} U_1^\top\mathbf{x}=U_1 U_1^\top \mathbf{x}$$
+                  \item 若 $r+1 \leq i \leq n$, 则 $A\mathbf{v}_{*,i}=0$, 所以 $\mathbf{v}_{*,i}\in \mathcal{N}(A)$.\\
+                  $$\dim \mathcal{N}(A) =n -\dim \mathcal{C}(A)=n-r$$
+                  所以 $\mathbf{v}_{*,r},\cdots,\mathbf{v}_{*,n}$ 构成 $\mathcal{N}(A)$ 的一组基。所以
+                  $$P_{\mathcal{N}(A)}(\mathbf{x})=P_{\mathcal{C}(V_2)}(\mathbf{x})=V_2 (V_2^\top V_2)^{-1} V_2^\top\mathbf{x}=V_2 V_2^\top \mathbf{x}$$
+                  \item $A^\top$ 的 SVD 为 $V\Sigma U^\top$, 由 (a) 同理可得 $P_{\mathcal{C}(A^\top)}(\mathbf{x})=V_1 V_1^\top \mathbf{x}$
+                  \item $A^\top$ 的 SVD 为 $V\Sigma U^\top$, 由 (b) 同理可得 $P_{\mathcal{N}(A^\top)}(\mathbf{x})=U_2 U_2^\top \mathbf{x}$
+                \end{enumerate}
         \item \begin{enumerate}
                   \item  设 $\mathbf{a}_{i,*}$ 为 $A$ 的第 $i$ 行，则 $A^\top$ 的第 $i$ 列为 $\mathbf{a}_{i,*}^\top$.
                         由5.1 小题
@@ -488,8 +613,50 @@ ID: \id
                                  & = \|A\|_F^2 +\|B\|_F^2
                             \end{aligned}$$
               \end{enumerate}
-        \item
-        \item
+        \item \begin{enumerate}
+                  \item 当 $K\geq r$ 时，显然 $X=A$ 时取到最小值 $0$.
+                  \item 当 $0 \leq K <r$ 时，$X=\sum_{i=1}^K \sigma_i \mathbf{u}_i\mathbf{v}_i^\top$ 时取到最小值，证明如下：\\
+                  设 $\sigma_i(M)$ 为 $M$ 的奇异值分解中第 $i$ 个对角元素。\\
+                  令 $$A_k=\sum_{i=1}^K \sigma_i \mathbf{u}_i\mathbf{v}_i^\top$$
+                        首先，注意到 $$\|A-A_k\|_F^2=\|\sum_{i=K+1}^r \sigma_i \mathbf{u}_i\mathbf{v}_i^\top\|_F^2=\sum_{i=K+1}^r \sigma_i^2$$
+                        设 $A=A'+A''$\\
+                        $$\begin{aligned}
+                            A' &= U'\Sigma'V'^\top \\
+                            A'' &= U''\Sigma''V''^\top \\
+                            A_K'&= \sum_{i=1}^K \sigma_i' \mathbf{u}_i'\mathbf{v}_i'^\top \\
+                            A_K''&=\sum_{i=1}^K \sigma_i'' \mathbf{u}_i'' \mathbf{v}_i''^\top
+                        \end{aligned}$$
+                        由三角不等式，有
+                        $$\sigma_1(A)\leq \sigma_1(A')+\sigma_1(A'')$$
+                        对任何 $i,j\geq1$
+                        $$\begin{aligned}
+                            \sigma _{i}(A')+\sigma _{j}(A'')&=\sigma _{1}(A'-A'_{i-1})+\sigma _{1}(A''-A''_{j-1})\\&\geq \sigma _{1}(A-A'_{i-1}-A''_{j-1})\\&\geq \sigma _{1}(A-A_{i+j-2})\qquad\\&=\sigma _{i+j-1}(A)
+                        \end{aligned}$$
+                        令 $A''=B_K$, $\rank{B_K}\leq K$, 所以 
+                        $$\sigma_{K+1}(A'')=\sigma_{K+1}(B_K)=0$$
+                        令 $i \geq 1, j=k+1$, 所以 
+                        $$\sigma _{i}(A')+\sigma _{j}(A'')=\sigma_i(A-B_K)\geq\sigma_{K+i}(A)$$
+                        所以
+                        $$\|A-B_K\|_F^2=\sum_{i=1}^r \left( \sigma_i(A-B_K)\right)^2 \geq \sum_{i=K+1}^r \sigma_i(A)^2=\|A-A_K\|_F^2$$
+                        所以 $A_K$ 即是要求的最优解。
+              \end{enumerate}
+        \item 输出的图片如下：\\
+              \begin{center}
+                  \begin{tabular}{cc}
+                      \includegraphics[width=0.3\columnwidth]{solution7.4_img/Alan_Turing_k=2.pdf}
+                              & \includegraphics[width=0.3\columnwidth]{solution7.4_img/Alan_Turing_k=4.pdf}   \\
+                      $k=2$   & $k=4$                                                                          \\
+                      \includegraphics[width=0.3\columnwidth]{solution7.4_img/Alan_Turing_k=8.pdf}
+                              & \includegraphics[width=0.3\columnwidth]{solution7.4_img/Alan_Turing_k=16.pdf}  \\
+                      $k=8$   & $k=16$                                                                         \\
+                      \includegraphics[width=0.3\columnwidth]{solution7.4_img/Alan_Turing_k=32.pdf}
+                              & \includegraphics[width=0.3\columnwidth]{solution7.4_img/Alan_Turing_k=64.pdf}  \\
+                      $k=32$  & $k=64$                                                                         \\
+                      \includegraphics[width=0.3\columnwidth]{solution7.4_img/Alan_Turing_k=128.pdf}
+                              & \includegraphics[width=0.3\columnwidth]{solution7.4_img/Alan_Turing_k=256.pdf} \\
+                      $k=128$ & $k=256$
+                  \end{tabular}
+              \end{center}
     \end{enumerate}
 \end{solution}
 
@@ -528,16 +695,37 @@ ID: \id
 
 \begin{solution}
     \begin{enumerate}
-        \item
+        \item  设 $Q=(\mathbf{q}_1,\cdots, \mathbf{q}_K)$
+        $$\begin{aligned}
+            f(GQ)
+            &= \tr \left(Q^\top \left(G^\top S G\right) Q\right) \\
+            &= \tr \left( \sum_{i=1}^K \sum_{j=1}^{K} \left(G^\top S G\right)_{i,j} \mathbf{q}_{i,*}^\top \mathbf{q}_{j,*} \right) \\
+            &= \tr \left( \sum_{i=1}^{K} \left(G^\top S G\right)_{i,i} \right) \\
+            &=\sum_{i=1}^{K} \left(G^\top S G\right)_{i,i} \\
+            &=f(G)
+        \end{aligned}$$
         \item $$f(\mathbf{g})
-                  =\tr \left( \mathbf{g}^\top S \mathbf{g}\right)
-                  =\mathbf{g}^\top S \mathbf{g}$$
-              $$\|\mathbf{g}\|_2=\mathbf{g}^\top \mathbf{g}=1$$
-              令
-              $$\nabla_\mathbf{g} f(\mathbf{g})=\left( S^\top +S \right) \mathbf{g}= 0$$
-        \item
-        \item
-        \item
+            =\tr \left( \mathbf{g}^\top S \mathbf{g}\right)
+            =\mathbf{g}^\top S \mathbf{g}$$
+            $$L(\lambda,\mathbf{g})=\mathbf{g}^\top S \mathbf{g}
+            +\lambda(\mathbf{g}^\top \mathbf{g}-1)$$
+            $$\nabla_\mathbf{g} L(\lambda,\mathbf{g})
+            =\left( S^\top +S \right) \mathbf{g}+2\lambda \mathbf{g}
+            =2S \mathbf{g}+2\lambda \mathbf{g}=0$$
+            得到
+            $$S\mathbf{g}=-\lambda \mathbf{g}$$ 
+            所以 $$f(\mathbf{g})=-\lambda \mathbf{g}^\top \mathbf{g}=-\lambda$$
+            而 $-\lambda$ 是 $S$ 的一个特征值，$f(\mathbf{g})$ 取最大值要求 $\lambda$ 取最大的特征值。\\
+            所以 $\mathbf{g}_1$ 是 $S$ 的最大特征值对应的特征向量。
+        \item $$L(\lambda,\mu,\mathbf{g})=\mathbf{g}^\top S \mathbf{g}+\lambda (\mathbf{g}^\top \mathbf{g})+\mu \mathbf{g}_1^\top \mathbf{g}$$
+        $$\nabla_\mathbf{g} L(\lambda,\mu,\mathbf{g})
+        =2S\mathbf{g}+2\lambda \mathbf{g}+\mathbf{g}_1=0$$
+        所以 $$f(\mathbf{g})=\mathbf{g}^\top S\mathbf{g}=-\lambda$$
+        同样的，$-\lambda$ 也是 $S$ 的特征值
+        $\mathbf{g}_2$ 为 $S$ 的第二大的特征值对应的特征向量。
+        \item 由上面两小题的规律可得，$\mathbf{g}_i$ 是 $S$ 的第 $i$ 大特征值对应的特征向量。
+        \item $f(\mathbf{g}_k)$, 是 $S$ 的第 $k$ 大的特征值。
+        \item 由上面小题易得，当前 $K$ 大的特征值都不相等时，前 $k$ 个 pronciple component 互不相等。
     \end{enumerate}
 \end{solution}
 

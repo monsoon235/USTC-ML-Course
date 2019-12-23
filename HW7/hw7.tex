@@ -398,8 +398,7 @@ ID: \id
 					            0.01818182 \\
 					            0.1        \\
 					            0.16363636
-				            \end{pmatrix}$$
-			            $$\mathbf{Q}_2=\mathbf{M}\mathbf{Q}_1=\begin{pmatrix}
+				            \end{pmatrix}, \mathbf{Q}_2=\mathbf{M}\mathbf{Q}_1=\begin{pmatrix}
 					            0.01068182 \\
 					            0.15863636 \\
 					            0.01068182 \\
@@ -538,15 +537,15 @@ ID: \id
 		      所以 $\pi(s_7)$ 必然为 left, $\pi(s_9)$ 必然为 down.\\
 		      最后得到的最优 $\pi^*$ 为
 		      $$\begin{aligned}
-				      \pi(s_1) & = \text{up}    \\
-				      \pi(s_2) & = \text{up}    \\
-				      \pi(s_3) & = \text{right} \\
-				      \pi(s_4) & = \text{left}  \\
-				      \pi(s_5) & = \text{right} \\
-				      \pi(s_6) & = \text{left}  \\
-				      \pi(s_7) & = \text{left}  \\
-				      \pi(s_8) & = \text{right} \\
-				      \pi(s_9) & = \text{down}
+				      \pi(s_1) = \text{up}\ \
+				       & \pi(s_2) = \text{up}\ \
+				       & \pi(s_3) = \text{right}\ \
+				       & \pi(s_4) = \text{left}\ \
+				       & \pi(s_5) = \text{right}\  \ \\
+				      \pi(s_6) = \text{left}\ \
+				       & \pi(s_7) = \text{left}\ \
+				       & \pi(s_8) = \text{right}\ \
+				       & \pi(s_9) = \text{down}\ \
 			      \end{aligned}$$
 		      对应的
 		      $$\mathbf{M}=\begin{pmatrix}
@@ -622,7 +621,17 @@ ID: \id
 		      $$Q^\pi(s,\pi(s))=V^\pi(s)$$
 		      所以
 		      $$Q^\pi(s,a)=\expect{r(s,a)}+\gamma \sum_{s'} P(s'\mid s,a)Q^\pi(s',\pi(s'))$$
-		\item
+		\item 逐级展开
+		      $$\begin{aligned}
+				      V^\pi(s)
+				       & =Q^\pi(s,\pi(s))                                                                                                                                       \\
+				       & \leq Q^\pi(s,\pi'(s))                                                                                                                                  \\
+				       & = \expect{r(s,\pi'(s))}+\gamma \sum_{s'} P(s'\mid s,\pi'(s))V^\pi(s')                                                                                  \\
+				       & \leq \expect{r(s,\pi'(s))}+\gamma \sum_{s'} P(s'\mid s,\pi'(s))Q^\pi(s',\pi'(s'))                                                                      \\
+				       & = \expect{r(s,\pi'(s))}+\gamma \sum_{s'} P(s'\mid s,\pi'(s)) \left( \expect{r(s',\pi'(s'))}+\gamma \sum_{s''} P(s''\mid s',\pi'(s'))V^\pi(s'') \right) \\
+				       & \leq \cdots                                                                                                                                            \\
+				       & = V^{\pi'}(s)
+			      \end{aligned}$$
 	\end{enumerate}
 \end{solution}
 

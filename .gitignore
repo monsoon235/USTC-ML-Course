@@ -1,11 +1,11 @@
-.vscode
-.idea
+**/.vscode
+**/.idea
 venv
 *.aux
 *.log
 *.pdf
 *.synctex.gz
-!HW4/figures/*.pdf
-!HW5/solution1_tree.pdf
-!HW6/solution7.4_img/*
-!HW7/images/Grid_World.pdf
+!2019/HW4/figures/*.pdf
+!2019/HW5/solution1_tree.pdf
+!2019/HW6/solution7.4_img/*
+!2019/HW7/images/Grid_World.pdf

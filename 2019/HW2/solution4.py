@@ -1,7 +1,3 @@
-print('Notice: 运行前先运行')
-print('\tpip install -r requirements.txt')
-print('安装所需依赖：numpy scipy matplotlib')
-
 import numpy as np
 import scipy.io as scio
 import matplotlib.pyplot as plt

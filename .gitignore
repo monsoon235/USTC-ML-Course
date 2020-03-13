@@ -1,6 +1,8 @@
-**/.vscode
-**/.idea
+.vscode
+.idea
 venv
+*.bbl
+*.blg
 *.aux
 *.log
 *.pdf

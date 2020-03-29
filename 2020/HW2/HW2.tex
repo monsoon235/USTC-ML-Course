@@ -1,0 +1,741 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%  Template for homework of Introduction to Machine Learning.
+%
+%  Fill in your name, lecture number, lecture date and body
+%  of homework as indicated below.
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\documentclass[11pt,letter,notitlepage]{article}
+%Mise en page
+\usepackage[left=2cm, right=2cm, lines=45, top=0.8in, bottom=0.7in]{geometry}
+\usepackage{fancyhdr}
+\usepackage{fancybox}
+\usepackage{graphicx}
+\usepackage{pdfpages} 
+\usepackage{enumitem}
+\renewcommand{\headrulewidth}{1.5pt}
+\renewcommand{\footrulewidth}{1.5pt}
+\pagestyle{fancy}
+\newcommand\Loadedframemethod{TikZ}
+\usepackage[framemethod=\Loadedframemethod]{mdframed}
+
+\usepackage{amssymb,amsmath}
+\usepackage{amsthm}
+\usepackage{thmtools}
+\usepackage{ctex}
+
+\setlength{\topmargin}{0pt}
+\setlength{\textheight}{9in}
+\setlength{\headheight}{0pt}
+
+\setlength{\oddsidemargin}{0.25in}
+\setlength{\textwidth}{6in}
+
+%%%%%%%%%%%%%%%%%%%%%%%%
+%% Define the Exercise environment %%
+%%%%%%%%%%%%%%%%%%%%%%%%
+\mdtheorem[
+topline=false,
+rightline=false,
+leftline=false,
+bottomline=false,
+leftmargin=-10,
+rightmargin=-10
+]{exercise}{\textbf{Exercise}}
+%%%%%%%%%%%%%%%%%%%%%%%
+%% End of the Exercise environment %%
+%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%
+%% Define the Solution Environment %%
+%%%%%%%%%%%%%%%%%%%%%%%
+\declaretheoremstyle
+[
+spaceabove=0pt, 
+spacebelow=0pt, 
+headfont=\normalfont\bfseries,
+notefont=\mdseries, 
+notebraces={(}{)}, 
+headpunct={:\quad}, 
+headindent={},
+postheadspace={ }, 
+postheadspace=4pt, 
+bodyfont=\normalfont, 
+qed=$\blacksquare$,
+preheadhook={\begin{mdframed}[style=myframedstyle]},
+	postfoothook=\end{mdframed},
+]{mystyle}
+
+\declaretheorem[style=mystyle,title=Solution,numbered=no]{solution}
+\mdfdefinestyle{myframedstyle}{%
+	topline=false,
+	rightline=false,
+	leftline=false,
+	bottomline=false,
+	skipabove=-6ex,
+	leftmargin=-10,
+	rightmargin=-10}
+%%%%%%%%%%%%%%%%%%%%%%%
+%% End of the Solution environment %%
+%%%%%%%%%%%%%%%%%%%%%%%
+
+
+% Definition environment
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+
+
+%% Homework info.
+\newcommand{\posted}{\text{Mar. 12, 2020}}       			%%% FILL IN POST DATE HERE
+\newcommand{\due}{\text{Mar. 19, 2020}} 			%%% FILL IN Due DATE HERE
+\newcommand{\hwno}{\text{2}} 		           			%%% FILL IN LECTURE NUMBER HERE
+
+
+%%%%%%%%%%%%%%%%%%%%
+%% Put your information here %%
+%%%%%%%%%%%%%%%%%%%
+\newcommand{\name}{\text{Jiahuan Yu}}  	          			%%% FILL IN YOUR NAME HERE
+\newcommand{\id}{\text{PB17121687}}		       			%%% FILL IN YOUR ID HERE
+%%%%%%%%%%%%%%%%%%%%
+%% End of the student's info %%
+%%%%%%%%%%%%%%%%%%%
+
+
+\newcommand{\proj}[2]{\textbf{P}_{#2} (#1)}
+\newcommand{\lspan}[1]{\textbf{span}  (#1)  }
+\newcommand{\rank}[1]{ \textbf{rank}  (#1)  }
+\newcommand{\dom}{ \textbf{dom}  }
+\newcommand{\RNum}[1]{\uppercase\expandafter{\romannumeral #1\relax}}
+% \def\cl{\mathbf{cl}}
+% \def\int{\mathbf{int}}
+% \def\conv{\mathbf{conv}}
+\DeclareMathOperator*{\intp}{\bf int\,}
+\DeclareMathOperator*{\cl}{\bf cl\,}
+\DeclareMathOperator*{\bd}{\bf bd\,}
+\DeclareMathOperator*{\conv}{\bf conv\,}
+\DeclareMathOperator*{\epi}{\bf epi\,}
+
+
+\lhead{
+	\textbf{\name}
+}
+\rhead{
+	\textbf{\id}
+}
+\chead{\textbf{
+		Homework \hwno
+	}}
+	
+	
+\begin{document}
+\vspace*{-4\baselineskip}
+\thispagestyle{empty}
+
+
+\begin{center}
+	{\bf\large Introduction to Machine Learning}\\
+	{Fall 2019}\\
+	University of Science and Technology of China
+\end{center}
+
+\noindent
+Lecturer: Jie Wang  			 %%% FILL IN LECTURER HERE
+\hfill
+Homework \hwno
+\\
+Posted: \posted
+\hfill
+Due: \due
+\\
+Name: \name
+\hfill
+ID: \id
+\hfill
+
+\noindent
+\rule{\textwidth}{2pt}
+
+\medskip
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% BODY OF HOMEWORK GOES HERE
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\textbf{Notice, }to get the full credits, please present your solutions step by step.
+
+% done
+\begin{exercise}[Limit and Limit Points \textnormal{10pts}]
+	\begin{enumerate}
+		\item Show that $\{\mathbf{x}_n\}$ in $\mathbb{R}^n$ converges to $\mathbf{x}\in \mathbb{R}^n$ if and only if $\{\mathbf{x}_n\}$ is bounded and has a unique limit point $\mathbf{x}$.
+		\item (\textbf{Limit Points of a Set}). Let $C$ be a subset of $\mathbb{R}^n$. A point $\mathbf{x}\in \mathbb{R}^n$ is called a limit point of $C$ if there is a sequence $\{\mathbf{x}_n\}$ in $C$ such that $\mathbf{x}_n\to \mathbf{x}$ and $\mathbf{x}_n \not=\mathbf{x}$ for all positive integers $n$. If $\mathbf{x}\in C$ and $\mathbf{x}$ is not a limit point of $C$, then $\mathbf{x}$ is called an isolated point of $C$. Let $C^\prime$ be the set of limit points of the set $C$. Please show the following statements.
+		      \begin{enumerate}
+			      \item If $C = (0,1)\cup\{2\}\subset \mathbb{R}$, then $C^\prime =[0,1]$ and $x=2$ is an isolated point of $C$.
+			      \item  The set $C^\prime$ is closed.
+			      \item  The closure of $C$ is the union of $C^\prime$ and $C$; that is $\cl C=C^\prime \cup C$. Moreover, $C^\prime \subset C$ if and only if $C$ is closed.
+		      \end{enumerate}
+	\end{enumerate}
+\end{exercise}
+\begin{solution}
+	\begin{enumerate}
+		\item \begin{enumerate}
+			      \item 必要性：设 $\{\mathbf{x}_n\}$ 收敛至 $\mathbf{x}$.
+
+			            则对于 $\forall \varepsilon >0$, $\exists N \in \mathbb{R}^+$, 使得 $\forall i \leq N$, 有
+			            $$\|\mathbf{x}_i-\mathbf{x}\|_2 < \varepsilon$$
+			            所以
+			            $$\|\mathbf{x}_k\|_2\leq\max \{\|\mathbf{x}_1\|_2,\|\mathbf{x}_2\|_2,\cdots,\|\mathbf{x}_{N-1}\|_2,\|\mathbf{x}\|_2+\varepsilon\}, k=1,2,3,\cdots$$
+			            所以 $\|\mathbf{x}_n\|$ 有界.
+
+			            从 $\{\mathbf{x}_n\}$ 中任取子序列 $\{\mathbf{y}_n\}$, 对同样的 $\varepsilon$, $N$, $n$, 有
+			            $$\|\mathbf{y}_i-\mathbf{x}\|_2 < \varepsilon$$
+			            所以 $\{\mathbf{y}_n\}$ 也收敛于 $\mathbf{x}$, 即 $\{\mathbf{x}_n\}$ 只有一个极限点。
+			      \item 充分性：设 $\{\mathbf{x}_n\}$ 有界且只有一个极限点。
+
+			            则对于 $\forall \varepsilon >0$, $\exists N \in \mathbb{R}^+$, 使得 $\forall i \leq N$, 有
+			            $$\|\mathbf{x}_i-\mathbf{x}\|_2 < \varepsilon$$
+
+			            所以 $\{\mathbf{x}_n\}$ 收敛至 $\mathbf{x}$.
+		      \end{enumerate}
+		\item \begin{enumerate}
+			      \item
+			            $x\in[0,0.5]$ 时，取 $x_i=x+\cfrac{0.75-x}{i}$.
+
+			            $x\in(0.5,1]$ 时，取 $x_i=x-\cfrac{x-0.25}{i}$.
+
+			            两种情况下都有 $x_i\to x$, 且 $x_i\neq x$.
+
+			            $x=2$ 时，$\forall \{x_n\}\in C$ 且 $x_i\neq 2$, 有 $\|x_i-x\|_2\geq 2$.
+
+			            显然不存在满足要求的序列。
+
+			            得证。
+			      \item 假设 $C'$ 不是闭集，则 $\exists x \notin C'$，在 $C'$ 中可以找到一个序列 $\{x_n\}\in C'$ 使得 $x_n\to x$.
+						
+				  对于每个 $x_n$, 又可以在 $C$ 中找到一个序列 $\{x_{nm}\}$ 使得 $x_{nm}\to x_n$.
+
+				  用 $\{x_{11},x_{22},\cdots\}$ 构成一个在 $C$ 中的序列，此序列收敛于 $x$. 与 $x\notin C'$ 矛盾。
+
+				所以 $C'$ 是闭集。
+
+			      \item 显然 $C'\subseteq \cl C$，$C\subseteq \cl C$.
+
+			            对于 $\cl C\setminus C'$ 中的点 $x$，比较 $C'$ 与闭包的定义可知，可以在 $C$ 中找到收敛于 $x$ 的序列 $\{x_n\}$ 但不能使 $x_n\neq x$, 所以必有 $x\in C$.
+
+			            所以 $\cl C\backslash C'\subset C$, 所以 $\cl C=C'\cup C$.
+
+			            必要性：因为 $\cl C=C'\cup C$, $C'\subset C$, 所以 $\cl C=C$, 所以 $C$ 是闭集。
+
+			            充分性：$C$ 是闭集，所以 $\cl C=C$, 又有 $\cl C=C'\cup C$, 所以 $C'\subset C$.
+		      \end{enumerate}
+	\end{enumerate}
+\end{solution}
+\newpage
+
+
+% 2(b)
+\begin{exercise}[Open and Closed Sets \textnormal{10pts}]
+	The norm ball $\{\mathbf{y} \in \mathbb{R}^n:\|\mathbf{y}-\mathbf{x}\|_2<r, \mathbf{x}\in \mathbb{R}^n\}$ is denoted by $B_r(\mathbf{x})$.
+	\begin{enumerate}
+		\item Given a set $C \subset \mathbb{R}^n$, please show the following are equivalent.
+		      \begin{enumerate}
+			      \item The set $C$ is closed; that is $\cl C=C$.
+			      \item The complement of $C$ is open.
+			      \item If $B_{\epsilon}(\mathbf{x})\cap C \not=\emptyset$ for every $\epsilon>0$, then $\mathbf{x}\in C$.
+		      \end{enumerate}
+		\item Given $A\subset\mathbb{R}^n$, a set $C\subset A$ is called open in $A$ if $$C=\{\mathbf{x}\in C: B_{\epsilon}(\mathbf{x})\cap A \subset C\,\text{for some}\, \epsilon>0\}.$$
+		      A set $C$ is said to be closed in $A$ if $A\setminus C$ is open in $A$.
+		      \begin{enumerate}
+			      \item Let $B= [0,1] \cup \{2\}$.  Please show that $[0,1]$ is not an open set in $\mathbb{R}$, while it is both open and closed in $B$.
+			      \item Please show that a set $C \subset A$ is open in $A$ if and only if $C=A\cap U$, where $U$ is open in $\mathbb{R}^n$.
+		      \end{enumerate}
+
+	\end{enumerate}
+\end{exercise}
+\begin{solution}
+	\begin{enumerate}
+		\item \begin{enumerate}
+			      \item (a)$\to$(b): 由开集的定义可知，$C$ 为闭集可以直接导出 $C$ 的补给是开集。
+			      \item (b)$\to$(c): $C$ 的补集是开集，所以 $C$ 为闭集，$\cl C=C$.
+
+			            若 $B_\epsilon(\mathbf{x})\cap C\neq \emptyset$, 通过以下方法构造 $C$ 中收敛到 $\mathbf{x}$ 的序列：
+
+			            设 $\exists \mathbf{y}_1 \neq \mathbf{x}$, $\mathbf{y}_1\in C$, $\|\mathbf{y}_1-\mathbf{x}\|_2=\epsilon_1$.
+
+			            在 $\|\mathbf{y}_i-\mathbf{x}\|_2<\|\mathbf{y}_{i-1}-\mathbf{x}\|_2, i=2,3,4,\cdots$ 中选择 $\mathbf{y}_i$，构成收敛到 $\mathbf{x}$ 的点列。
+
+			            所以 $\mathbf{x} \in \cl C$, 所以 $\mathbf{x}\in C$.
+			      \item (c)$\to$(a): 用上述相同的方法构造点列 $\{\mathbf{y}_n\}$, $\{\mathbf{y}_n\}\subset C$, $\mathbf{y}_n\to \mathbf{x}$.
+
+			            所以 $\mathbf{x}\in \cl C$. 由 (c) 得 $\mathbf{x}\in C$，所以 $\cl C\subseteq C$. 又因为 $C\subseteq \cl C$, 所以 $\cl C=C$.
+		      \end{enumerate}
+		\item \begin{enumerate}
+			      \item 显然 $[0,1]\subseteq \cl C$, 证明方法同 Exercise 1.2(a).
+
+			            当 $x\notin [0,1]$ 时，任取点列 $\{x_n\}\subset[0,1]$, 则 $\|x-x_i\|_2>=\min \{\|x\|_2,\|x-1\|_2\}>0$, 所以 $x$ 不是极限点，$x\notin \cl [0,1]$.
+
+			            所以 $[0,1]=\cl [0,1]$, $[0,1]$ 是 $\mathbb{R}$ 中的闭集。
+
+			            $\forall \epsilon <1$, $\forall x \in [0,1]$ $B_\epsilon(x)\cap B\in [0,1]$, 所以 $[0,1]$ 在 $B$ 中是开集。
+
+			            $B\setminus [0,1]={2}$, $\forall \epsilon <1$, $B_\epsilon (2)\cap B={2}\in{2}$, 所以 $B\setminus [0,1]$ 在 $B$ 中是开集，所以 $[0,1]$ 在 $B$ 中是闭集。
+			      \item \begin{enumerate}
+				            % \item 充分性：设 $C$ 在 $A$ 中是开集，则 $\exists x \in C$, 使得 $\forall \epsilon>0$, $B_\epsilon(x)\cap A\not\subset C$.
+
+				            %       所以 $\exists x \in C$, 使得 $\forall \epsilon>0$, $B_\epsilon(x)\cap A\not\subset C$.
+				            %       %   todo
+			            \end{enumerate}
+		      \end{enumerate}
+	\end{enumerate}
+\end{solution}
+\newpage
+
+
+% done
+\begin{exercise}[Bolzano-Weierstrass Theorem \textnormal{10pts}]
+	\textbf{The Least Upper Bound Axiom}
+
+
+	\emph{Any nonempty set of real numbers with an upper bound has a least upper bound. That is, $\sup  C$ always exists for a nonempty bounded above set $C \subset \mathbb{R}$.}
+
+	Please show the following statements from \textbf{the least upper bound axiom}.
+	\begin{enumerate}
+		\item Let $C$ be a nonempty subset of $\mathbb{R}$ that is bounded above. Prove that $u = \sup C$ if and only if $u$ is an upper bound of $C$ and
+		      \begin{align*}
+			      \forall\,\epsilon>0,\exists\,a \in C\,\text{ such that }\,a>u-\epsilon.
+		      \end{align*}
+		\item  Every bounded sequence in $\mathbb{R}$ has at least one limit point.
+		\item Every bounded sequence in $\mathbb{R}^n$ has at least one limit point.
+	\end{enumerate}
+\end{exercise}
+\begin{solution}
+	\begin{enumerate}
+		\item \begin{enumerate}
+			      \item 充分性：设 $u=\sup C$.
+
+			            显然 $u$ 是 $C$ 的上界。
+
+			            $\forall \epsilon>0$, $u-\epsilon$ 不是上界, 所以 $\exists a\in C$, $a>u-\epsilon$.
+			      \item 必要性：设 $u$ 是上界且
+			            $$\forall\,\epsilon>0,\exists\,a \in C\,\text{ such that }\,a>u-\epsilon$$
+
+			            所以 $u-\epsilon$ 不是上界。
+
+			            所以 $u=\sup C$.
+		      \end{enumerate}
+		\item 先证明任何实数列都有单调的子列。设有界实数序列为 $\{a_n\}$
+		      $$X=\{a_k: \forall n>k,a_k\geq a_n\}$$
+		      此集合中的每个元素，都比序列中排在其后的所有元素都大。
+
+		      如果 $X$ 有无数个元素，在 $X$ 中任取一个下标递增的序列，即是单调序列。
+
+		      如果 $X$ 元素个数有限，设 $N$ 为 $X$ 中元素下标最大的。
+
+		      $\forall n>N$, $a_n \notin X$, 所以 $a_n$ 之后有一个元素比 $a_n$ 大。
+
+		      取 $k_0=N+1$, $k_1>k_0$ 为第一个大于 $a_{k_0}$ 的元素的下标，$k_2>k_1$ 为第一个大于 $a_{k_1}$ 的元素的下标...
+
+		      用此方法即可构造出单调序列。
+
+		      有界单调序列必有极限点，得证。
+
+		\item 先知考虑第一维，可以取出一个第一维上的单调序列。再考虑第二维，取出第二维上的单调序列... 由此每一维都有极限，因此可以取出有极限点的序列。
+	\end{enumerate}
+\end{solution}
+
+\newpage
+
+
+% done
+\begin{exercise}[Extreme Value Theorem \textnormal{15pts}]
+	\begin{enumerate}
+		\item Show that a set $C \subset \mathbb{R}^n$ is compact if and only if every sequence in $C$ has a subsequence that converges to a point in $C$.
+		\item Let $C$ be a compact subset of $\mathbb{R}^n$ and $f:C \rightarrow \mathbb{R}$ be continuous. Please show that there exist $\mathbf{a},\mathbf{b} \in C$ such that
+		      \begin{align*}
+			      f(\mathbf{a}) \leq f(\mathbf{x}) \leq f(\mathbf{b}),\,\forall\,\mathbf{x}\in C.
+		      \end{align*}
+		\item Let $f: \left[ a,b \right] \rightarrow\mathbb{R}$ be continuous. Show that the range of $f$ is a compact interval $\left[c,d \right]$ for some $c,d \in \mathbb{R}$.
+	\end{enumerate}
+\end{exercise}
+\begin{solution}
+	\begin{enumerate}
+		\item \begin{enumerate}
+			      \item 必要性：$C$ 是紧集，则 $\cl C=C$. 而 $C$ 的每个序列必定收敛到 $\cl C$ 中某个点, 所以同时收敛到 $C$ 中某个点。
+			      \item 充分性：$C$ 的任意序列都有收敛的子序列，则 $C$ 必然有界。这些子序列的收敛至 $\cl C$ 中的点，同时也收敛至 $C$ 中的点，所以 $C=\cl C$. 所以 $C$ 是紧集。
+		      \end{enumerate}
+		\item 必然可以在 $C$ 中挑选出点列 $\{\mathbf{x}_n\}$, $\mathbf{x}_n\to\inf_{\mathbf{x}\in C} f(\mathbf{x})$.
+
+		      由于 $C$ 是紧集，$C=\cl C$, 所以 $\inf_{\mathbf{x}\in C} f(\mathbf{x})$ 在 $f$ 值域内。
+
+		      所以 $f(\mathbf{a})=\inf_{\mathbf{x}\in C} f(\mathbf{x})$。
+
+		      同理可证 $\sup_{\mathbf{x}\in C} f(\mathbf{x})$ 在 $f$ 值域内，$f(\mathbf{b})=\sup_{\mathbf{x}\in C} f(\mathbf{x})$
+		\item 如上题所示，令
+		      $$\begin{aligned}
+				      c & =\inf_{\mathbf{x}\in C} f(\mathbf{x}) \\
+				      d & =\sup_{\mathbf{x}\in C} f(\mathbf{x})
+			      \end{aligned}$$
+		      由上题知 $c$ 和 $d$ 是可以取到的, 只需证明值域连续。由于 $f$ 是连续函数，这是显然的。
+	\end{enumerate}
+
+\end{solution}
+
+\newpage
+
+% 2
+\begin{exercise}[Convex Sets \textnormal{10pts}]
+	Let $C \subset \mathbb{R}^n$ be a convex set. Please show the following statements.
+	\begin{enumerate}
+		\item The intersection $\cap_{i \in I}C_i$ of any collection $\{ C_i:i\in I \}$ of convex sets is convex.
+		\item Both $\cl C $ and $\intp C $ are convex.
+		\item The set$\{ \mathbf{y}\in\mathbb{R}^m:\mathbf{y}=\mathbf{Ax}+\mathbf{a},\mathbf{x}\in C \}$ is convex, where $\mathbf{A} \in \mathbb{R}^{m \times n}$ and $\mathbf{a} \in \mathbb{R}^m$.
+		\item The set $\{ \mathbf{y}\in\mathbb{R}^m:\mathbf{x}=\mathbf{By}+\mathbf{b},\mathbf{x}\in C \}$ is convex, where $\mathbf{B} \in \mathbb{R}^{n \times m}$ and $\mathbf{b} \in \mathbb{R}^n$.
+	\end{enumerate}
+\end{exercise}
+\begin{solution}
+	\begin{enumerate}
+		\item 设 $\theta\in[0,1]$, $\mathbf{a},\mathbf{b}\in\cap_{i\in I} C_i$.
+
+		      $C_i$ 是凸集，所以 $\theta \mathbf{a}+(1-\theta)\mathbf{b}\in C_i, i\in I$.
+
+		      即 $\theta \mathbf{a}+(1-\theta)\mathbf{b}\in \cap_{i\in I} C_i$, $\cap_{i\in I} C_i$ 是凸集。
+		\item 设 $x,y \in \cl C$, $\{x_n\},\{y_n\}$ 分别是 $C$ 中的序列，且 $x_n\to x$, $y_n \to y$.
+		
+		则 $\forall \theta\in[0,1]$, $\{\theta x_n +(1-\theta)y_n\}$ 也是 $C$ 中的序列，所以 $\theta x+(1-\theta)y \in \cl C$. 所以 $\cl C$ 是凸集。
+
+		设 $x,y \in \intp C$, 则对 $\forall \epsilon>0$, $B_\epsilon(x)\cap C\neq \emptyset$,  $B_\epsilon(y)\cap C\neq \emptyset$, 分别在两个邻域中取 $x',y'\in C$.
+
+		对 $\forall \theta\in[0,1]$
+		$$\theta x'+(1-\theta) y'\in C$$
+		$$\theta x'+(1-\theta) y' \in B_\epsilon (\theta x+(1-\theta)y)$$
+		所以 $$B_\epsilon (\theta x+(1-\theta)y)\cap C \neq \emptyset$$
+		所以 $$\theta x+(1-\theta)\in \intp C$$
+		\item 设 $\theta\in[0,1]$, $\mathbf{y}_1,\mathbf{y}_2\in \{ \mathbf{y}\in\mathbb{R}^m:\mathbf{y}=\mathbf{Ax}+\mathbf{a},\mathbf{x}\in C \}$.
+		      $$\begin{aligned}
+				      \theta \mathbf{y}_1+(1-\theta)\mathbf{y}_2
+				       & =\theta (\mathbf{A}\mathbf{x}_1+\mathbf{a})+(1-\theta) (\mathbf{A}\mathbf{x}_2+\mathbf{a}) \\
+				       & =\mathbf{A}[\theta \mathbf{x}_1+(1-\theta)\mathbf{x}_2]+\mathbf{a}                         \\
+				       & =\mathbf{A}\mathbf{x}_3+\mathbf{a}                                                         \\
+				       & \in \{ \mathbf{y}\in\mathbb{R}^m:\mathbf{y}=\mathbf{Ax}+\mathbf{a},\mathbf{x}\in C \}
+			      \end{aligned}$$
+		      所以 $\{ \mathbf{y}\in\mathbb{R}^m:\mathbf{y}=\mathbf{Ax}+\mathbf{a},\mathbf{x}\in C \}$ 是凸集。
+		\item 设 $\theta\in[0,1]$, $y_1,y_2\in \{ \mathbf{y}\in\mathbb{R}^m:\mathbf{x}=\mathbf{By}+\mathbf{b},\mathbf{x}\in C \}$.
+		      $$\begin{aligned}
+				      \theta (\mathbf{B}\mathbf{y}_1+\mathbf{b})+(1-\theta) (\mathbf{B}\mathbf{y}_2+\mathbf{b})
+				       & =\mathbf{B}[\theta \mathbf{y}_1+(1-\theta) \mathbf{y}_2]+\mathbf{b} \\
+				       & \in C
+			      \end{aligned}$$
+		      所以 $\theta \mathbf{y}_1+(1-\theta) \mathbf{y}_2\in\{ \mathbf{y}\in\mathbb{R}^m:\mathbf{x}=\mathbf{By}+\mathbf{b},\mathbf{x}\in C \}$
+
+		      所以是凸集。
+	\end{enumerate}
+\end{solution}
+
+\newpage
+
+% done
+\begin{exercise}[Carathéodory’s Lemma \textnormal{5pts}]
+	Suppose that $S \subset \mathbb{R}^n$. Show that every element of $\conv S$ is a convex combination of at most $n + 1$ points of $S$.
+\end{exercise}
+\begin{solution}
+	设 $\mathbf{x}\in \conv S$, $\mathbf{x}=\sum_{i=1}^k \lambda_i \mathbf{s}_i$, $\mathbf{s}_i\in S$, $\sum_{i=1}^k \lambda_i=1$, $\lambda_i\geq0$.
+
+	假设 $k>n+1$。
+
+	显然 $\mathbf{s}_2-\mathbf{s}_1, \mathbf{s}_3-\mathbf{s}_1, \cdots, \mathbf{s}_k-\mathbf{s}_1$ 线性相关。
+
+	所以存在不全为 $0$ 的 $\mu_2,\mu_3,\cdots,\mu_k$, 使得
+	$$\sum_{i=2}^k \mu_i (\mathbf{s}_i-\mathbf{s}_1)=0$$
+	设 $\mu_1=-\sum_{i=2}^k \mu_i$. 于是
+	$$\sum_{i=1}^k \mu_i \mathbf{s}_i=0$$
+	$$\sum_{i=1}^k \mu_i=0$$
+	因此, 对任意 $\alpha >0$
+	$$\mathbf{x}=\sum_{i=1}^k \lambda_i \mathbf{s}_i-\alpha \sum_{i=1}^k \mu_i \mathbf{s}_i=\sum_{i=1}^k (\lambda_i-\alpha\mu_i)\mathbf{s}_i$$
+	由于必定有一个 $\mu_i>0$, 设
+	$$\alpha=\min_i \{\cfrac{\lambda_i}{\mu_i}, \mu_i>0\}$$
+	于是有
+	$$\lambda_i-\alpha\mu_i\geq 0$$
+	$$\sum_{i=1}^k (\lambda_i-\alpha\mu_i)=1$$
+	即 $\mathbf{x}$ 表示为 $S$ 中最多 $k-1$ 个点的凸组合。重复此过程，直到表示为 $S$ 中最多 $d+1$ 个点的凸组合。
+\end{solution}
+
+\newpage
+
+% done
+\begin{exercise}[Strictly Convex Functions \textnormal{10pts}]
+	\begin{enumerate}
+		\item Suppose that $f:\mathbb{R}^n \to \mathbb{R}$ is continuously differentiable. Please show that $f$ is strictly convex if and only if
+		      \begin{align*}
+			      f(\mathbf{y})> f(\mathbf{x})+\langle\nabla f(\mathbf{x}),\mathbf{y}-\mathbf{x}\rangle, \forall\, \mathbf{x},\mathbf{y} \in\mathbb{R}^n, \mathbf{x}\not=\mathbf{y}.
+		      \end{align*}
+		\item  Suppose that $f:\mathbb{R}^n \to \mathbb{R}$ is twice continuously differentiable. Please show that $f$ is strictly convex if
+		      \begin{align*}
+			      \nabla^2 f(\mathbf{x}) \succ 0, \forall\, \mathbf{x} \in \mathbb{R}^n.
+		      \end{align*}
+		      Is the converse true? Please show your statement.
+	\end{enumerate}
+\end{exercise}
+\begin{solution}
+	\begin{enumerate}
+		\item \begin{enumerate}
+			      \item 必要性：设 $f$ 严格凸。
+
+			            所以 $\forall \theta \in (0,1)$
+			            $$f(x+\theta(y-x))<f(x)+\theta [f(y)-f(x)]$$
+			            所以
+			            $$f(y)-f(x)>\lim_{\theta\to0}\cfrac{f(x+\theta(y-x))-f(x)}{\theta}=\langle \nabla f(x),y-x\rangle$$
+			      \item 充分性：令 $z=\theta x+(1-\theta)y$.
+			            $$f(\mathbf{x})> f(\mathbf{z})+\langle\nabla f(\mathbf{z}),\mathbf{x}-\mathbf{z}\rangle$$
+			            $$f(\mathbf{y})> f(\mathbf{z})+\langle\nabla f(\mathbf{z}),\mathbf{y}-\mathbf{z}\rangle$$
+			            两式分别乘 $\theta$ 和 $1-\theta$, 相加即可结果。
+		      \end{enumerate}
+		\item 设 $g(t)=f(x+ts)$, 所以 $g'(0)=\langle\nabla f(x),s\rangle$, $g''(0)=\langle\nabla^2 f(x)s,s\rangle$.
+		      $$\begin{aligned}
+				      f(x+s)
+				       & =g(1)                                                          \\
+				       & =g(0)+\int_0^1 g'(t)dt                                         \\
+				       & =g(0)+\int_0^1 \left[ g'(0)+\int_0^t g''(\tau) d\tau \right]dt \\
+				       & =g(0)+g'(0)+\int_0^1 \left[\int_0^t g''(\tau) d\tau \right]dt  \\
+				       & \geq g(0)+g'(0)                                                \\
+				       & = f(x)+\langle\nabla f(x),s\rangle
+			      \end{aligned}$$
+		      由上题知 $f$ 为严格凸函数。
+
+		      反之也成立。
+
+		      设 $x_t=x+ts$,
+		      $$\begin{aligned}
+				      0
+				       & < \cfrac{1}{t^2} \langle \nabla f(x_t)-\nabla f(x),x_t-x\rangle  \\
+				       & =\cfrac{1}{t} \int_0^t \langle \nabla^2 f(x+ts)s,s\rangle d \tau
+			      \end{aligned}$$
+		      令 $t\to0$, 即可得证。
+
+	\end{enumerate}
+
+\end{solution}
+\newpage
+
+\newpage
+
+% done
+\begin{exercise}[Strongly Convex Functions \textnormal{15pts}]
+	\begin{enumerate}
+		\item  Suppose that $f$ is continuously differentiable. Show that a continuously differentiable function $f$ is strongly convex with parameter $\mu>0$ if and only if
+		      \begin{align*}
+			      f(\mathbf{y})\ge f(\mathbf{x})+\langle\nabla f(\mathbf{x}),\mathbf{y}-\mathbf{x}\rangle+\frac{\mu}{2}\|\mathbf{y}-\mathbf{x}\|_2^2, \forall\, \mathbf{x},\mathbf{y}\in\mathbb{R}^n.
+		      \end{align*}
+		\item  Suppose that $f$ is twice continuously differentiable and strongly convex with parameter $\mu>0$. Please give an interpretation of $\mu$ in terms of the eigenvalues of $\nabla^2f(\mathbf{x})$.
+		\item (\textbf{Lipschitz Continuity}). Suppose that $f:\mathbb{R}^n\rightarrow\mathbb{R}$ is twice continuously differentiable, and the gradient of $f$ is Lipschitz continuous, i.e.,
+		      \begin{align*}
+			      \|\nabla f(\mathbf{x})-\nabla f(\mathbf{y})\|_2\le L\|\mathbf{x}-\mathbf{y}\|_2, \forall\,\mathbf{x},\mathbf{y}\in\mathbb{R}^n,
+		      \end{align*}
+		      where $L>0$ is the Lipschitz constant. Please give an interpretation of $L$ in terms of the eigenvalues of $\nabla^2f(\mathbf{x})$.
+	\end{enumerate}
+\end{exercise}
+\begin{solution}
+	\begin{enumerate}
+		\item 设 $g(x)=f(x)-\cfrac{\mu}{2}\|x\|_2^2$.
+
+		      $g(x)$ 是凸函数当且仅当
+		      $$g(y)\geq g(x)+\langle \nabla g(x),y-x \rangle$$
+		      因为 $\nabla g(x)=\nabla (x)-\mu x$, 因此
+		      $$\begin{aligned}
+				           & g(x) \textbf{ is convex}                                                                             \\
+				      \iff & f(y)-\cfrac{\mu}{2}\|y\|_2^2 \geq f(x)-\cfrac{\mu}{2}\|x\|_2^2+\langle \nabla f(x)-\mu x,y-x \rangle \\
+				      \iff & f(y) \geq f(x)+\langle \nabla f(x),y-x \rangle +\cfrac{\mu}{2}\|y-x\|_2^2                            \\
+				      \iff & f \textbf{ is strongly convex}
+			      \end{aligned}$$
+		\item 设 $\nabla^2 f(x)$ 的最小特征值为 $\lambda_{min}$.
+		      $$ f(y) \geq f(x)+\langle \nabla f(x),y-x \rangle +\cfrac{\mu}{2}\|y-x\|_2^2$$
+		      $$ f(x) \geq f(y)+\langle \nabla f(y),x-y \rangle +\cfrac{\mu}{2}\|y-x\|_2^2$$
+		      相加得$$\langle\nabla f(y)-\nabla f(x),f(y)-f(x) \rangle\geq\mu \|y-x\|_2^2$$
+		      令 $x_t=x+td, t>0$
+		      $$t\int_0^t \langle \nabla^2 f(x+\tau d)d,d \rangle d\tau=\langle \nabla f(x_t)-\nabla f(x),x_t-x \rangle\geq t^2\mu\|d\|_2$$
+		      左右除 $t^2$ 并令 $t\to0^+$
+		      $$d^\top \nabla^2 f(x) d\geq \mu \|d\|_2^2$$
+		      于是得
+		      $$\lambda_{min}\geq\mu$$
+		\item 设 $\nabla^2 f(x)$ 的最大特征值为 $\lambda_{max}(x)$.
+		      下面证明 $L$ 是 Lipschitz constant $\iff$ $L\geq \lambda_{max}$
+		      \begin{enumerate}
+			      \item $\implies$: 令 $x_t=x+td, t>0$
+			            $$t\int_0^t \langle \nabla^2 f(x+\tau d)d,d \rangle d\tau=\langle \nabla f(x_t)-\nabla f(x),x_t-x \rangle\leq t^2L\|d\|_2$$
+			            左右除 $t^2$ 并令 $t\to0^+$
+			            $$d^\top \nabla^2 f(x) d\leq L \|d\|_2^2$$
+			            于是得
+			            $$\lambda_{max}(x)\leq L$$
+			      \item $\impliedby$: 设 $d=y-x$.
+
+			            $$\begin{aligned}
+					            \|\nabla f(y)-\nabla f(x)\|_2
+					             & =\|\int_0^1 \nabla^2 f(x+\tau d)d d\tau\|_2           \\
+					             & \leq\int_0^1 \|\nabla^2 f(x+\tau d)\|_2 \|d\|_2 d\tau \\
+					             & =\int_0^1 \lambda_{max}(x+\tau d) \|d\|_2 d\tau       \\
+					             & \leq L\|d\|_2                                         \\
+					             & =L \|y-x\|_2
+				            \end{aligned}$$
+		      \end{enumerate}
+	\end{enumerate}
+\end{solution}
+
+
+
+\newpage
+
+
+
+
+% 2
+\begin{exercise}[Epigraph \textnormal{10pts}]
+	\begin{enumerate}
+		\item Given a real-valued function $f:\mathbb{R}^n \to \left( - \infty,+\infty \right]$. Show that the following are equivalent:
+		      \begin{enumerate}
+			      \item The epigraph $\epi f$ is closed.
+			      \item The $\alpha$-level set $C_{\alpha}$ is closed for any value of $\alpha$.
+		      \end{enumerate}
+		\item Let the function $f:\mathbb{R}^n \times \mathbb{S}^n_{++} \rightarrow \mathbb{R}$ be defined as
+		      \begin{align*}
+			      f(\mathbf{x},\mathbf{Y}) = \mathbf{x}^{\top}\mathbf{Y}^{-1}\mathbf{x},
+		      \end{align*}
+		      where $\mathbb{S}^n_{++}$ denotes the set of symmetric positive-definte $n \times n$ matrices. Please show that $f$ is convex.
+	\end{enumerate}
+\end{exercise}
+\begin{solution}
+	\begin{enumerate}
+		\item \begin{enumerate}
+			      \item (a)$\to$(b): 由 epigraph 定义知 $\{(x,t),x\in \dom f, f(x)\leq t\}$ 是闭集。
+			            $$C_\alpha=\{x\in \dom\ f: f(x)\leq \alpha\}$$
+
+			            假设 $C_\alpha$ 不是闭集，设 $x_1,x_2\in C_\alpha$, $\exists \theta \in [0,1]$, 使得 $$\theta x_1+(1-\theta) x_2 \notin C_\alpha$$
+			            即 $f(x_1)\leq \alpha, f(x_2)\leq \alpha, f(\theta x_1+(1-\theta) x_2)>\alpha$
+			            显然 $(x_1,\alpha),(x_2,\alpha) \in \epi f$, 那么 $(\theta x_1+(1-\theta) x_2,\alpha)\in \epi f$, 即
+			            $$f(\theta x_1+(1-\theta) x_2)\leq \alpha$$
+			            矛盾，所以 $C_\alpha$ 是闭集。
+			      \item (b)$\to$(a): 同以上，设 $C_\alpha$ 是闭集，假设 $\epi f$ 不是闭集。
+
+			            设 $\forall \alpha$, 有 $x_1,x_2\in C_\alpha$, $\forall \theta \in [0,1]$
+
+			            $f(x_1)\leq \alpha, f(x_2)\leq \alpha, f(\theta x_1+(1-\theta) x_2)\leq\alpha$
+
+			            那么 $(x_1,\alpha),(x_2,\alpha),(\theta x_1+(1-\theta) x_2,\alpha) \in \epi f$
+
+			            由 $\alpha$ 的任取性，只 $\epi f$ 是凸集。
+		      \end{enumerate}
+		\item
+		%  设 $\theta\in[0,1]$, $\mathbf{x}_1,\mathbf{x}_2\in\mathbb{R}^n$, $\mathbf{Y}_1,\mathbf{Y}_2\in\mathbb{S}^n_{++}$, $(\mathbf{x}_1,\mathbf{Y}_1)\neq(\mathbf{x}_2,\mathbf{Y}_2)$.
+		%       $$\begin{aligned}
+		% 		      \theta f(\mathbf{x}_1,\mathbf{Y}_1)+(1-\theta)f(\mathbf{x}_2,\mathbf{Y}_2)
+		% 		       & =\theta\mathbf{x}_1^\top\mathbf{Y}_1^{-1}\mathbf{x}_1+(1-\theta) \mathbf{x}_2^\top\mathbf{Y}_2^{-1}\mathbf{x}_2                                             \\
+		% 		       & =(\theta\mathbf{x}_1)^\top(\theta\mathbf{Y}_1)^{-1}(\theta\mathbf{x}_1)+[(1-\theta) \mathbf{x}_2]^\top[(1-\theta)\mathbf{Y}_2]^{-1}[(1-\theta)\mathbf{x}_2] \\
+		% 	      \end{aligned}$$
+	\end{enumerate}
+\end{solution}
+\newpage
+
+
+\begin{exercise}[ Operations that Preserve Convexity \textnormal{25pts}]
+	\begin{enumerate}
+		\item Let $f:\mathbb{R}^m \rightarrow \left( -\infty,+\infty \right]$ be a given convex function, let $\mathbf{A}\in \mathbb{R}^{m \times n}$ and $\mathbf{b} \in \mathbb{R}^m$, and let
+		      \begin{align*}
+			      F(\mathbf{x}) = f(\mathbf{Ax+b}),\,\mathbf{x}\in\mathbb{R}^n
+		      \end{align*}
+		      Show that $F$ is convex.
+		\item Let $f_i:\mathbb{R}^n \rightarrow \left(-\infty,+\infty \right]$, $i=1,\dots,m$ be given convex functions. Show that
+		      \begin{align*}
+			      F(\mathbf{x}) = \sum_{i=1}^m w_if_i(\mathbf{x})
+		      \end{align*}
+		      is convex, where $w_i \geq 0,\,i=1,\dots,m$.
+		\item \begin{enumerate}
+			      \item Let $f_i:\mathbb{R}^n \rightarrow \left(-\infty,+\infty \right]$ be given convex functions for $i \in I$, where $I$ is an arbitrary index set. Show that
+			            \begin{align*}
+				            F(\mathbf{x}) = \sup_{i\in I}f_i(\mathbf{x})
+			            \end{align*}
+			            is convex.
+			      \item Consider the function $f(\mathbf{X})=\lambda_{\max}(\mathbf{X})$, with $\dom\, f =\mathbb{S}^n$, where $\lambda_{\max}(\mathbf{X})$ is the largest eigenvalue of $\mathbf{X}$ and $\mathbb{S}^n$ is a set of $n\times n$ real symmetric matrices. Please show that $f$ is a convex function.
+		      \end{enumerate}
+		\item Suppose that the training set is $\{(\mathbf{x}_i,y_i)\}_{i=1}^m$, where $\mathbf{x}_i\in\mathbb{R}^d$ is the $i^{th}$ data instance and $y_i\in\mathbb{R}$ is the corresponding label.
+		      \begin{enumerate}
+			      \item Lasso refers to the regression problem as follows:
+			            \begin{align*}
+				            \min_{\boldsymbol{\beta}}\,\frac{1}{2m}\|\mathbf{X}\boldsymbol{\beta}-\mathbf{y}\|_2^2+\lambda\|\boldsymbol{\beta}\|_1,
+			            \end{align*}
+			            where $\mathbf{X}\in\mathbb{R}^{m\times d}$ with its $i^{th}$ row being $\mathbf{x}_i^{\top}$, $\boldsymbol{\beta} \in \mathbb{R}^d$, and $\lambda>0$ is the regularization parameter.
+			      \item Logistic regression refers to the problem as follows:
+			            \begin{align*}
+				            \min_{\mathbf{w},b}\,\frac{1}{m}\sum_{i=1}^m\log\left(1+\exp(-y_i(\langle \mathbf{w},\mathbf{x}_i\rangle-b))\right),
+			            \end{align*}
+			            where $y_i\in\{1,-1\}$, $\mathbf{w}\in\mathbb{R}^d$, and $b\in\mathbb{R}$.
+		      \end{enumerate}
+		      Show that the objective functions in the above problems are convex.
+	\end{enumerate}
+\end{exercise}
+\begin{solution}
+	\begin{enumerate}
+		\item 设 $\theta\in[0,1]$, $\mathbf{x}_1,\mathbf{x}_2\in\mathbb{R}^n$.
+		      $$\begin{aligned}
+				      \theta F(\mathbf{x}_1)+(1-\theta)F(\mathbf{x}_2)
+				       & = \theta f(\mathbf{A}\mathbf{x}_1+\mathbf{b})+(1-\theta) f(\mathbf{A}\mathbf{x}_2+\mathbf{b})      \\
+				       & \geq f( \theta (\mathbf{A}\mathbf{x}_1+\mathbf{b})+(1-\theta)(\mathbf{A}\mathbf{x}_2+\mathbf{b}) ) \\
+				       & = f(\mathbf{A}[\theta\mathbf{x}_1+(1-\theta)\mathbf{x}_2]+\mathbf{b})                              \\
+				       & = F(\theta\mathbf{x}_1+(1-\theta)\mathbf{x}_2)
+			      \end{aligned}$$
+		      所以 $F$ 是凸函数。
+		\item 设 $\theta\in[0,1]$, $\mathbf{x}_1,\mathbf{x}_2\in\mathbb{R}^n$.
+		      $$\begin{aligned}
+				      \theta F(\mathbf{x}_1)+(1-\theta)F(\mathbf{x}_2)
+				       & =\theta\sum_{i=1}^m w_i f_i(\mathbf{x}_1)+(1-\theta)\sum_{i=1}^m w_i f_i(\mathbf{x}_2) \\
+				       & =\sum_{i=1}^m w_i \left[ \theta f_i(\mathbf{x}_1)+(1-\theta) f_i(\mathbf{x}_2) \right] \\
+				       & \geq \sum_{i=1}^m w_i f_i(\theta\mathbf{x}_1+(1-\theta)\mathbf{x}_2)                   \\
+				       & = F(\theta\mathbf{x}_1+(1-\theta)\mathbf{x}_2)
+			      \end{aligned}$$
+		      所以 $F$ 是凸函数。
+		\item \begin{enumerate}
+			      \item 设 $\theta\in[0,1]$, $\mathbf{x}_1,\mathbf{x}_2\in\mathbb{R}^n$.
+			            $$\begin{aligned}
+					            \theta F(\mathbf{x}_1)+(1-\theta)F(\mathbf{x}_2)
+					             & =\theta \sup_{i\in I} f_i(\mathbf{x}_1)+(1-\theta) \sup_{i\in I} f_i(\mathbf{x}_2)      \\
+					             & =\sup_{i\in I} \theta f_i(\mathbf{x}_1)+\sup_{i\in I} (1-\theta) f_i(\mathbf{x}_2)      \\
+					             & \geq \sup_{i\in I} \left[ \theta f_i(\mathbf{x}_1)+ (1-\theta) f_i(\mathbf{x}_2)\right] \\
+					             & \geq \sup_{i\in I} f_i(\theta\mathbf{x}_1+(1-\theta)\mathbf{x}_2)                       \\
+					             & = F(\theta\mathbf{x}_1+(1-\theta)\mathbf{x}_2)
+				            \end{aligned}$$
+			      \item $\lambda_{max}=\sup_{\mathbf{x}\neq 0} \cfrac{\mathbf{x}^\top \mathbf{X} \mathbf{x}}{\mathbf{x}^\top\mathbf{x}}$
+		      \end{enumerate}
+		\item \begin{enumerate}
+			      \item 显然 $\|\mathbf{\beta}\|_2^2$ 和 $\|\mathbf{\beta}\|_1$ 是凸函数（由 norm 性质）。
+
+			            由第 1 问知 $\|\mathbf{X}\mathbf{\beta}-\mathbf{y}\|_2^2$ 也是凸函数。
+
+			            最终它们的线性组合 $\min_{\boldsymbol{\beta}}\,\frac{1}{2m}\|\mathbf{X}\boldsymbol{\beta}-\mathbf{y}\|_2^2+\lambda\|\boldsymbol{\beta}\|_1$ 是凸函数。
+			      \item 令 $\overline{\mathbf{x}}_i=\begin{pmatrix}
+					            1 \\\mathbf{x}_i
+				            \end{pmatrix}$, $\overline{\mathbf{w}}=\begin{pmatrix}
+					            -b \\\mathbf{w}
+				            \end{pmatrix}$.
+
+			            原问题化为 $$\min_{\overline{\mathbf{w}}} \cfrac{1}{m} \sum_{i=1}^m \log (1+\exp(-y_i\langle \overline{\mathbf{w}},  \overline{\mathbf{x}}_i \rangle))$$
+
+			            先证 $f(\overline{\mathbf{w}})=\log (1+\exp(-y\langle \overline{\mathbf{w}},  \overline{\mathbf{x}} \rangle))$ 是凸函数。
+
+			            $$\nabla_{\overline{\mathbf{w}}} f(\overline{\mathbf{w}})
+				            =-\cfrac{\exp(-y\langle \overline{\mathbf{w}},  \overline{\mathbf{x}} \rangle)}{1+\exp(-y\langle \overline{\mathbf{w}},  \overline{\mathbf{x}} \rangle)}\cdot y\overline{\mathbf{x}}$$
+
+			            $$\nabla^2_{\overline{\mathbf{w}}} f(\overline{\mathbf{w}})
+				            =y^2\cdot\cfrac{\exp(-y\langle \overline{\mathbf{w}},  \overline{\mathbf{x}} \rangle)}{\left(1+\exp(-y\langle \overline{\mathbf{w}},  \overline{\mathbf{x}} \rangle)\right)^2}\cdot \overline{\mathbf{x}}\overline{\mathbf{x}}^\top$$
+
+			            这是半正定矩阵，因此原函数是凸函数。
+
+		      \end{enumerate}
+	\end{enumerate}
+\end{solution}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}
